@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+// inspired by: http://bl.ocks.org/mbostock/3883245
+
+// data path config
+vizDataSourceUrl = "https://gist.githubusercontent.com/devinshields/e96b6eb70f1f40f7f794/raw/c6c278d5e9b452ff7393d8d83932e3af55fea760/data.tsv"
+
+// viz data - parsing configs
+var parseDate = d3.time.format("%d-%b-%y").parse;
+
+// viz configs - display size
+var margin = {top: 20, right: 20, bottom: 30, left: 50};
+var width = 960 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
+
+// viz configs - set scale parameters
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+// viz configs - axis configs
+var xAxis = d3.svg.axis().scale(x).orient("bottom");
+var yAxis = d3.svg.axis().scale(y).orient("left");
+
+// TODO: don't understand
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+// create data viz - make a new DOM element and assign it various attributes
+var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// use a d3.js library function to load data from a url and into the browser
+d3.tsv(vizDataSourceUrl, function(error, data) {
+
+  console.log("vizDataSourceUrl is set to: " + vizDataSourceUrl);
+
+  if (error){
+    // console log any errors
+    console.log("an error occured in the d3.js logic!");
+    console.log(error);
+    // and alert the user via a blocking pop-up. TODO: remove this
+    alert("An error occured in the d3.js logic! Please inspect your browser's console log.")
+    throw error;
+    };
+
+  // apply parsing logic to each record
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d.close = +d.close;
+  });
+
+  // extract the data's domain & range, then notifify the viz's axis objects
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.close; }));
+
+  // TODO: don't understand
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  // TODO: don't understand
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price ($)");
+
+  // TODO: don't understand
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+});
+
+</script>
