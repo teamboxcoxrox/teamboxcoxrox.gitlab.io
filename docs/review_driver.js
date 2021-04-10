@@ -34,10 +34,11 @@ function processDatas(data, rank_sel) {
             if (depth === levels.length - 1) depthCursor.push({
                 name: d.asin,
                 value: Math.abs(d.bubble_size),
-                bubble_color: Math.abs(d.bubble_color),
+                bubble_color: d.bubble_color,
                 title: d.title,
                 description: d.description,
-                topic_rank: d.topic_rank
+                topic_rank: d.topic_rank,
+                clean_link: d.clean_link
             });
         });
     });
@@ -81,9 +82,7 @@ function draw_circles(data_filter, data_tree) {
         .attr("r", d => d.r)
         .style("fill", function(d) {
             if (d.depth == 3) {return colorscale(d.data.children[0].bubble_color);}
-            else {return d.children ? depthcolor(d.depth) : null;}; })
-        .on('mouseover', tooltip.show)
-        .on("click", zoomTo);
+            else {return d.children ? depthcolor(d.depth) : null;}; });
 
     node.append("image")
         .attr("xlink:href", function(d) {if (d.depth == 3 && d.data.children[0].topic_rank == 1) {return "../lib/staricon.svg"}})
@@ -136,7 +135,6 @@ function draw_circles(data_filter, data_tree) {
             k = 1;
             centered = null; }
 
-
         node.transition()
             .duration(1000)
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
@@ -145,26 +143,31 @@ function draw_circles(data_filter, data_tree) {
 }
 
 
-
 var pack = d3.pack()
     .size([diameter - margin, diameter - margin])
     .padding(function(d) {if (d.depth == 0) {return 25} else {return 3}});
 
 function set_tooltip(data) {
   //  console.log(data)
-    var HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
-                       <br><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${data.children[0].bubble_color} <b>Ratings: </b> ${data.children[0].value}
+    if (data.children[0].clean_link >= 50) {
+        HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
+                       <br><center></center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
                        <br><br></btr>${data.children[0].description} 
-                `
-    HTMLstring = HTMLstring.replaceAll('-1','N/A')
+                ` }
+    else {
+        HTMLstring =  `<center>${data.children[0].title} (Discontinued)</center>
+                        <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
+                        <br></btr>${data.children[0].description}
+                        `}
+    HTMLstring = HTMLstring.replaceAll('-1','N/A').replaceAll('nan','')
     return HTMLstring}
 
 var tooltip = d3.tip()
     .attr('class', 'tooltip')
     .style("background",'#f0f0f0')
     .style("opacity", 0)
-    .attr("margin", 5)
-    .html(function(d) { if (d.depth == 3) {return set_tooltip(d.data); }});
+    .attr("margin", 0)
+    .html(function(d) { if (d.depth == 3 ) {return set_tooltip(d.data); }});
 ;
 
 var depthcolorchoices = ['#f7f7f7','#525252']
@@ -173,7 +176,7 @@ var depthcolor = d3.scaleLinear()
     .range(depthcolorchoices)
     .interpolate(d3.interpolateHcl);
 
-d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
+d3.dsv(",", "../data/products_prepped.csv", function(d) {
     return {
         asin: d.asin,
         title: d.title,
@@ -182,7 +185,8 @@ d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
         topic_name: d.topic_name,
         topic_rank: d.topic_rank,
         bubble_color: d.bubble_color,
-        bubble_size: d.bubble_size
+        bubble_size: d.bubble_size,
+        clean_link: d.clean_link
     }
 }).then(function(data) {
     var data_results = processDatas(data, rank_sel)
