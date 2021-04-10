@@ -1,3 +1,4 @@
+console.log('hello')
 var svg = d3.select("svg"),
     width = 950,
     height = width,
