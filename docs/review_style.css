@@ -13,6 +13,10 @@ div.tooltip {
     pointer-events: none;
 }
 
+.cattext {
+    font-family: Verdana
+}
+
 #left{
     float:left;
     width: 33%;
