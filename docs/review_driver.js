@@ -176,7 +176,7 @@ var depthcolor = d3.scaleLinear()
     .range(depthcolorchoices)
     .interpolate(d3.interpolateHcl);
 
-d3.dsv(",", "../data/products_prepped.csv", function(d) {
+d3.dsv(",", "products_prepped.csv", function(d) {
     return {
         asin: d.asin,
         title: d.title,
