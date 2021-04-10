@@ -3,7 +3,8 @@ var svg = d3.select("svg"),
     width = 950,
     height = width,
     margin = 30,
-    diameter = width;
+    diameter = width,
+    centered;
 
 var pack = d3.pack()
     .size([diameter - margin, diameter - margin])
@@ -11,18 +12,19 @@ var pack = d3.pack()
 
 function set_tooltip(data) {
     console.log(data)
-    var HTMLstring =  `<a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a>
+    var HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
                        <br><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${data.children[0].bubble_color} <b>Ratings: </b> ${data.children[0].value}
-                       <br>${data.children[0].description} 
+                       <br><br></btr>${data.children[0].description} 
                 `
     HTMLstring = HTMLstring.replaceAll('-1','N/A')
     return HTMLstring}
 
 var tooltip = d3.tip()
-    .attr('class', 'd3-tip')
+    .attr('class', 'tooltip')
     .style("background",'#f0f0f0')
+   // .style("visibility", "hidden" )
     .style("opacity", 0)
-    .attr("width", 200)
+    .attr("margin", 5)
     .html(function(d) { if (d.depth == 3) {return set_tooltip(d.data); }})
 ;
 
@@ -77,7 +79,7 @@ d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
         });
     });
 
-    var colorchoices = ['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32'];
+    var colorchoices = ['#005a32','#238443','#41ab5d','#78c679','#addd8e','#d9f0a3','#f7fcb9','#ffffe5'];
     var mincolor = d3.min(data, function(d){return d.bubble_color;})
     var maxcolor = d3.max(data, function(d){return d.bubble_color})
 
@@ -117,13 +119,31 @@ d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
                             if (d.depth == 3) {return colorscale(d.data.children[0].bubble_color);}
                                          else {return d.children ? depthcolor(d.depth) : null;}; })
             .on('mouseover', tooltip.show)
-        //.on('mouseout', tooltip.hide)
+            .on("click", zoomTo);
     ;
 
 
 
+//zooming https://bl.ocks.org/mbostock/2206590
+    function zoomTo(d) {
+        var x, y, k;
 
+        if (d && centered !== d) {
+            var centroid = [d.x, d.y];
+            x = centroid[0];
+            y = centroid[1];
+            k = 4;
+            centered = d;}
+        else {
+            x = width / 2;
+            y = height / 2;
+            k = 1;
+            centered = null; }
 
+        g.transition()
+            .duration(1000)
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+    }
 
 
 
