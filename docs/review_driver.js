@@ -34,7 +34,7 @@ var depthcolor = d3.scaleLinear()
     .range(depthcolorchoices)
     .interpolate(d3.interpolateHcl);
 
-d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
+d3.dsv(",", "../data/productsfilter.csv", function(d) {
     return {
         asin: d.asin,
         title: d.title,
