@@ -1,35 +1,51 @@
 var svg = d3.select("svg"),
-    width = 900,
-    height = 500,
-    margin = 20,
+    width = 950,
+    height = width,
+    margin = 30,
     diameter = width;
-
-var color = d3.scaleLinear()
-    .domain([-1, 1])
-    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-    .interpolate(d3.interpolateHcl);
 
 var pack = d3.pack()
     .size([diameter - margin, diameter - margin])
-    .padding(2);
+    .padding(3);
 
-d3.dsv(",", "mock_main_df.csv", function(d) {
+function set_tooltip(data) {
+    console.log(data)
+    var HTMLstring =  `<a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a>
+                       <br><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${data.children[0].bubble_color} <b>Ratings: </b> ${data.children[0].value}
+                       <br>${data.children[0].description} 
+                `
+    HTMLstring = HTMLstring.replaceAll('-1','N/A')
+    return HTMLstring}
+
+var tooltip = d3.tip()
+    .attr('class', 'd3-tip')
+    .style("background",'#f0f0f0')
+    .style("opacity", 0)
+    .attr("width", 200)
+    .html(function(d) { if (d.depth == 3) {return set_tooltip(d.data); }})
+;
+
+var depthcolorchoices = ['#f7f7f7','#525252']
+var depthcolor = d3.scaleLinear()
+    .domain([-1, 1]) //depth count
+    .range(depthcolorchoices)
+    .interpolate(d3.interpolateHcl);
+
+d3.dsv(",", "../data/products_4.9 - filter.csv", function(d) {
     return {
         asin: d.asin,
+        title: d.title,
         description: d.description,
-        topic: d.topic,
-        topic_description: d.topic_description,
-        sentiment: d.sentiment,
-        quantile: d.quantile
+        category: d.category,
+        topic_name: d.topic_name,
+        topic_rank: d.topic_rank,
+        bubble_color: d.bubble_color,
+        bubble_size: d.bubble_size
     }
 }).then(function(data) {
-    console.table(data)
-    console.log('made it')
 
-
- //   let topics = [...new Set(data.map(d => d.topic_description))];
     var newData = { name :"root", children : [] },
-        levels = ["topic_description","asin"];
+        levels = ["category","topic_name","asin"];
 
 // For each data row, loop through the expected levels traversing the output tree
     data.forEach(function(d){
@@ -51,82 +67,65 @@ d3.dsv(",", "mock_main_df.csv", function(d) {
             // Now reference the new child array as we go deeper into the tree
             depthCursor = depthCursor[index].children;
             // This is a leaf, so add the last element to the specified branch
-            if ( depth === levels.length - 1 ) depthCursor.push({ name : d.description, value : Math.abs(d.sentiment) }); // d.sentiment
+            if ( depth === levels.length - 1 ) depthCursor.push({name : d.asin,
+                                                                 value : Math.abs(d.bubble_size),
+                                                                 bubble_color: Math.abs(d.bubble_color),
+                                                                 title: d.title,
+                                                                 description: d.description,
+                                                                 topic_rank: d.topic_rank}); // d.sentiment
         });
     });
 
-  console.log(newData)
+    var colorchoices = ['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32'];
+    var mincolor = d3.min(data, function(d){return d.bubble_color;})
+    var maxcolor = d3.max(data, function(d){return d.bubble_color})
 
- // var hierarchy = d3.hierarchy(newData).sum(function(d){ return d.value; }
+    var colorscale = d3.scaleQuantize()
+        .domain([mincolor,maxcolor])
+        .range(colorchoices);
 
     root = d3.hierarchy(newData)
         .sum(function(d) { return d.value; })
         .sort(function(a, b) { return b.value - a.value; });
 
-console.log(root)
-
-    var focus = root,
-        nodes = pack(root).descendants(),
-        view;
+    var nodes = pack(root).descendants();
 
     var svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("background", color(-1))
-        .on("click", function() { zoom(root); });
+        .style("background", depthcolor(-1))
+        .style("position", "absolute")
 
-    var node = svg.selectAll(".node")
-        .data(nodes)
-        .enter().append("g")
-        .attr("dx", function(d) {return d.x})
-        .attr("dy", function(d) {return d.y})
-        .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+    svg.call(tooltip);
 
-    node.append("circle")
-        .attr("r", function(d) {return d.r})
-        .attr("dx", 0)
-        .attr("dy", 0)
-        .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-        .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+    var g = svg.append("g")
+        .attr("transform", "translate(0, 0) scale(1)");
 
-
- //   var text = svg.selectAll("text")
-  //      .data(nodes)
-  //      .enter().append("text")
-  //      .attr("class", "label")
-  //      .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
-  //      .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-  //      .text(function(d) { return d.data.name; });
-
-   // var node = svg.selectAll("circle,text");
+    let parents = g.selectAll(".parent")
+            .data(root.descendants().slice(1).filter(d => d.children))
+            .join("circle")
+            .classed("parent", true)
+            .attr("vector-effect", "non-scaling-stroke")
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y)
+            .attr("r", d => d.r)
+            .attr("fill", "transparent")
+            .attr("stroke", "none")
+            .attr("stroke-width", 1)
+            .style("fill", function(d) {
+                            if (d.depth == 3) {return colorscale(d.data.children[0].bubble_color);}
+                                         else {return d.children ? depthcolor(d.depth) : null;}; })
+            .on('mouseover', tooltip.show)
+        //.on('mouseout', tooltip.hide)
+    ;
 
 
-    zoomTo([root.x, root.y, root.r * 2 + margin]);
 
-    function zoom(d) {
-        var focus0 = focus; focus = d;
 
-        var transition = d3.transition()
-            .duration(d3.event.altKey ? 7500 : 750)
-            .tween("zoom", function(d) {
-                var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
-                return function(t) { zoomTo(i(t)); };
-            });
 
-        transition.selectAll("text")
-            .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-            .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
-            .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-            .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-    }
 
-    function zoomTo(v) {
-        var k = diameter / v[2]; view = v;
-        node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
-        node.attr("r", function(d) { return d.r * k; });
-    }
 
 
 }).catch(function(error) {
     console.log(error);
-});
+}); 

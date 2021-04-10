@@ -1,18 +1,19 @@
-path.link {
-    fill: none;
-    stroke: #666;
-    stroke-width: 1.5px;
+body {
+    margin: 0;
+    background-color: #f7f7f7;
+    font-family: Verdana
 }
 
-circle {
-    fill: #ccc;
-    stroke: #fff;
-    stroke: black;
-    stroke-width: 1.5px;
-}
-
-text {
-    fill: #000;
-    font: 10px sans-serif;
+div#tooltip {
+    position: absolute;
+    display: inline-block;
+    padding: 10px;
+    font-family: 'Open Sans' sans-serif;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 2px;
     pointer-events: none;
+    opacity: 0;
+    z-index: 1;
 }
