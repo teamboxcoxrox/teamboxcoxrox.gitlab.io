@@ -85,7 +85,7 @@ function draw_circles(data_filter, data_tree) {
             else {return d.children ? depthcolor(d.depth) : null;}; });
 
     node.append("image")
-        .attr("xlink:href", function(d) {if (d.depth == 3 && d.data.children[0].topic_rank == 1) {return "../lib/staricon.svg"}})
+        .attr("xlink:href", function(d) {if (d.depth == 3 && d.data.children[0].topic_rank == 1) {return "staricon.svg"}})
         .attr("x", d => (d.x - d.r) )
         .attr("y", d => (d.y - d.r) )
         .attr("width", d => d.r * 2)
