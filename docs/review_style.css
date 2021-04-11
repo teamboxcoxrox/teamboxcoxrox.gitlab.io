@@ -9,18 +9,48 @@ div.tooltip {
     font: 12px sans-serif;
     border: 5px #1b1e23;
     border-radius: 8px;
+    padding: 6px;
     pointer-events: none;
+}
+.stattable {
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    padding: 10px;
 }
 
 .cattext {
     font-family: Verdana
 }
 
-#left{
-    float:left;
-    width: 33%;
+#top{
+    float: top;
+    height: 90px;
 }
+
+
+#left{
+    float: left;
+    width: 33%;
+    height: 950px;
+}
+
+
 #right{
-    float:left;
+    float: right;
+    width: 950px;
+    height: 950px;
+}
+
+
+#legend{
+    position: relative;
+    bottom: 0;
+}
+
+
+#packedbubble{
+    float: right;
     width: 66%;
 }
+

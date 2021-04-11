@@ -6,22 +6,45 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="review_style.css">
-	<title>CSE 6242 Team Project - BoxCoxRox</title>
+	<title>CSE 6242 Team Project Spring 2021 - BoxCoxRox</title>
 </head>
 <body>
+<script src="review_driver.js"></script>
 
 <div id="top">LDA on Product Reviews</div>
 
 <div id="left">
-	<div class="container"> We analyzed 102131lk23j4 thousand reviews to find the very best pet products and now we share the insight with you. </div>
-	Viewing the top <span id="rank_val">20</span> products in each category
-	<br></brt><input style="width: 200px;" type="range" min="1" max="100" id="rank_sel" value="5" step='1'>
+	<div class="container">We analyzed over X years of Amazon product reviews in the Pet Category to find the very best pet products and now we share the insight with you.
+
+	<br>	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+		<table border="0" class="stattable">
+			<tr>
+				<td>9999</td>
+				<td width="15"></td>
+				<td>6,542,483</td>
+				<td width="15"></td>
+				<td>9999</td>
+			</tr>
+			<tr>
+				<td><b>Products Reviewed</b></td>
+				<td width="15"></td>
+				<td><b>Reviews Analyzed</b></td>
+				<td width="15"></td>
+				<td><b>3rd Impressive Stat</b></td>
+			</tr>
+		</table>
+
+	</div>
+
+	<br></brt>
+
+	<div id="legend"></div>
 </div>
 
-<div id="right">
-<div class="chart"></div>
-<script src="review_driver.js"></script>
-</div>
+Product Ranking Filter: <span id="rank_val">20</span>  <input style="width: 300px;" type="range" min="1" max="100" id="rank_sel" value="5" step='1'>
+
+<div id="packedbubble"></div>
 
 </body>
 </html>
