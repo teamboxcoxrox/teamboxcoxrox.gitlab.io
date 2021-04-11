@@ -326,6 +326,7 @@ d3.dsv(",", "products_prepped.csv", function(d) {
         clean_link: d.clean_link
     }
 }).then(function(data) {
+    console.table(data)
     var data_results = processDatas(data, rank_sel)
     var data_filter = data_results['data_filter']
     var data_tree = data_results['data_tree']
