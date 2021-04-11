@@ -90,7 +90,13 @@ function draw_circles(data_filter, data_tree) {
         .attr("y", d => (d.y - d.r) )
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
-        .on('mouseover', tooltip.show)
+        .on('mouseover',  function(d) {
+            if (d.depth != 3){
+                tooltip.hide(d)
+            }else{
+                tooltip.show(d)
+            }
+            })
         .on("click", zoomTo);
 
 //curved titles approach from https://www.visualcinnamon.com/2015/09/placing-text-on-arcs/
@@ -166,7 +172,8 @@ var tooltip = d3.tip()
     .attr('class', 'tooltip')
     .style("background",'#f0f0f0')
     .style("opacity", 0)
-    .attr("margin", 0)
+    .attr("margin", "0px")
+    .attr("padding", "10px")
     .html(function(d) { if (d.depth == 3 ) {return set_tooltip(d.data); }});
 
 var depthcolorchoices = ['#f7f7f7','#525252']

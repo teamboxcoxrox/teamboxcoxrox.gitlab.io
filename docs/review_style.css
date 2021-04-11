@@ -9,6 +9,7 @@ div.tooltip {
     font: 12px sans-serif;
     border: 5px #1b1e23;
     border-radius: 8px;
+    padding: 6px;
     pointer-events: none;
 }
 
@@ -16,11 +17,12 @@ div.tooltip {
     font-family: Verdana
 }
 
-#left{
-    float:left;
+#left {
+    float: left;
     width: 33%;
 }
-#right{
-    float:left;
+
+#right {
+    float: left;
     width: 66%;
 }
