@@ -4,7 +4,9 @@ var svg = d3.select("svg"),
     margin = 30,
     diameter = width,
     centered,
-    rank_sel = 5;
+    rank_sel = 20,
+    legendwidth = 500,
+    legendheight = 700;
 console.log('hello')
 
 function processDatas(data, rank_sel) {
@@ -60,7 +62,7 @@ function draw_circles(data_filter, data_tree) {
 
     var nodes = pack(root).descendants();
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#packedbubble").append("svg")
         .attr("width", width)
         .attr("height", height)
         .style("background", depthcolor(-1))
@@ -96,7 +98,7 @@ function draw_circles(data_filter, data_tree) {
             }else{
                 tooltip.show(d)
             }
-            })
+        })
         .on("click", zoomTo);
 
 //curved titles approach from https://www.visualcinnamon.com/2015/09/placing-text-on-arcs/
@@ -104,15 +106,15 @@ function draw_circles(data_filter, data_tree) {
         .attr("id", function(d) {
             if (d.depth == 1) {return "path"+d.data.name;}}) //Unique id of the path
         .attr("d", function(d) {arcstart_x = d.x - d.r
-                                arcstart_y = d.y
-                                arcend_x = d.x + d.r
-                                arcend_y = d.y
-                                arc_r = d.r
-                                arcstring = "M " + arcstart_x + "," + arcstart_y
-                                    + " A " + arc_r + "," + arc_r + " 0 0,1 "
-                                    + arcend_x + "," + arcend_y
-                                if (d.depth == 1)
-                                {return arcstring}})
+            arcstart_y = d.y
+            arcend_x = d.x + d.r
+            arcend_y = d.y
+            arc_r = d.r
+            arcstring = "M " + arcstart_x + "," + arcstart_y
+                + " A " + arc_r + "," + arc_r + " 0 0,1 "
+                + arcend_x + "," + arcend_y
+            if (d.depth == 1)
+            {return arcstring}})
         .style("fill", "none")
         .style("stroke", "#AAAAAA");
 
@@ -125,10 +127,51 @@ function draw_circles(data_filter, data_tree) {
         .attr("startOffset", "50%")
         .text(function(d) {if (d.depth == 1) {return d.data.name}});
 
+    var node_child_values = nodes.filter(function(d) {if (d.depth == 4) {return d}})
+    var node_r_values = node_child_values.map(function(d) {return d.r}).sort(d3.ascending)
+    var max_child_r = d3.max(node_r_values)
+    var quant_vals = [.50, .75, 1]
+
+    var legend_ycenter = (legendheight/2)
+    var legend_xcenter = (legendwidth/2)
+
+    //bubble legend structure
+    var legendsvg = d3.select("#legend").append("svg")
+        .attr("width", legendwidth)
+        .attr("height", legendheight)
+        .style("position", "absolute")
+        .attr("class","legend")
+
+    var legendnode = legendsvg.selectAll(".legendnode")
+        .data(quant_vals)
+        .enter().append('g')
+        .attr("class","legendnode")
+
+    legendnode.append("circle")
+        .attr("cy", function(d) {return legend_ycenter - d3.quantile(node_r_values, d)})
+        .attr("cx", legend_xcenter)
+        .attr("r", function(d) {return d3.quantile(node_r_values, d)})
+        .style("stroke", "black")
+        .style("fill", "none");
+
+    legendnode.append("text")
+        .attr('x', legend_xcenter + (max_child_r + 20))
+        .attr('y', function(d, i) {return legend_ycenter - (i * 25)})
+        .text( function(d){ return (d * 100) + 'th percentile'})
+        .style("font-size", 5)
+        .attr('alignment-baseline', 'middle')
+
+    legendnode.append("line")
+        .attr('x1', function(d) {return legend_xcenter + (d3.quantile(node_r_values, d))})
+        .attr('x2', legend_xcenter + (max_child_r + 20) - 2)
+        .attr('y1', function(d) {return legend_ycenter - (d3.quantile(node_r_values, d))})
+        .attr('y2', function(d, i) {return (legend_ycenter - (i * 25)) - 5})
+        .attr('stroke', 'black')
+        .style('stroke-dasharray', ('2,2'))
+
     //zooming https://bl.ocks.org/mbostock/2206590
     function zoomTo(d) {
         var x, y, k;
-        console.log('ive been clicked')
         if (d && centered !== d) {
             var centroid = [d.x, d.y];
             x = centroid[0];
@@ -144,6 +187,10 @@ function draw_circles(data_filter, data_tree) {
         node.transition()
             .duration(1000)
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+
+        legendsvg.transition()
+            .duration(1000)
+            .attr("transform", "scale(" + k + ")")
     }
 
 }
@@ -154,7 +201,7 @@ var pack = d3.pack()
     .padding(function(d) {if (d.depth == 0) {return 25} else {return 3}});
 
 function set_tooltip(data) {
-  //  console.log(data)
+    //  console.log(data)
     if (data.children[0].clean_link = 1) {
         HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
                        <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
@@ -209,11 +256,9 @@ d3.dsv(",", "products_prepped.csv", function(d) {
         var data_filter = data_results['data_filter']
         var data_tree = data_results['data_tree']
         d3.selectAll("g > *").remove()
+
         draw_circles(data_filter, data_tree)
-
-// For each data row, loop through the expected levels traversing the output tree
-
-    });
+            });
 
 }).catch(function(error) {
     console.log(error);

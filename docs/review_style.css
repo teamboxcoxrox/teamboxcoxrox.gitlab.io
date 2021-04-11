@@ -12,17 +12,43 @@ div.tooltip {
     padding: 6px;
     pointer-events: none;
 }
+.stattable {
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    padding: 10px;
+}
 
 .cattext {
     font-family: Verdana
 }
 
-#left {
-    float: left;
-    width: 33%;
+#top{
+    float: top;
+    height: 90px;
 }
 
-#right {
+
+#left{
     float: left;
-    width: 66%;
+    width: 33%;
+    height: 950px;
+}
+
+
+#right{
+    float: right;
+    width: 950px;
+    height: 950px;
+}
+
+
+#legend{
+    position: relative;
+    bottom: 0;
+}
+
+
+#packedbubble{
+    float: right;
 }
