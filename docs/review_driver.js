@@ -149,9 +149,9 @@ var pack = d3.pack()
 
 function set_tooltip(data) {
   //  console.log(data)
-    if (data.children[0].clean_link >= 50) {
+    if (data.children[0].clean_link = 1) {
         HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
-                       <br><center></center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
+                       <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
                        <br><br></btr>${data.children[0].description} 
                 ` }
     else {
@@ -168,7 +168,6 @@ var tooltip = d3.tip()
     .style("opacity", 0)
     .attr("margin", 0)
     .html(function(d) { if (d.depth == 3 ) {return set_tooltip(d.data); }});
-;
 
 var depthcolorchoices = ['#f7f7f7','#525252']
 var depthcolor = d3.scaleLinear()

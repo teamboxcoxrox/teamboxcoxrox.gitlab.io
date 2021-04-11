@@ -6,7 +6,6 @@ body {
 
 div.tooltip {
     position: absolute;
-    padding: 6px;
     font: 12px sans-serif;
     border: 5px #1b1e23;
     border-radius: 8px;
