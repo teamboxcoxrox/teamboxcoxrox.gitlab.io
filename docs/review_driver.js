@@ -262,4 +262,4 @@ d3.dsv(",", "products_prepped.csv", function(d) {
 
 }).catch(function(error) {
     console.log(error);
-}); 
+});  
