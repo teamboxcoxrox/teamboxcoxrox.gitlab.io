@@ -32,7 +32,7 @@ div.tooltip {
 #left{
     float: left;
     width: 33%;
-    height: 950px;
+    height: 600px;
 }
 
 
@@ -42,12 +42,22 @@ div.tooltip {
     height: 950px;
 }
 
-
-#legend{
+#lda_vis{
     position: relative;
     bottom: 0;
+    width: 300px;
+    height: 300px;
 }
 
+#legend{
+    position: absolute;
+    height: 300px;
+}
+
+#colorlegend{
+    position: absolute;
+    height: 150px;
+}
 
 #packedbubble{
     float: right;

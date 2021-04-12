@@ -40,7 +40,8 @@ function processDatas(data, rank_sel) {
                 title: d.title,
                 description: d.description,
                 topic_rank: d.topic_rank,
-                clean_link: d.clean_link
+                clean_link: d.clean_link,
+                topic_img: d.topic_img
             });
         });
     });
@@ -92,8 +93,22 @@ function draw_circles(data_filter, data_tree) {
         .attr("y", d => (d.y - d.r) )
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
-        .on('mouseover',  function(d) {if (d.depth != 3){tooltip.hide(d)}
-                                      else{tooltip.show(d)}})
+        .on('mouseover',  function(d) {
+            console.log("Level: " + d.depth)
+            if (d.depth != 3){
+                tooltip.hide(d)
+                console.log("Length: " + d.data.children.length)
+                if (d.depth==2) {
+                    s = d.data.name.replaceAll(" ","_")+".png"
+                    d3.select("#lda_vis").html("<img height=200px src='./img/" + s + "'>");
+                }
+            }
+            else{
+                tooltip.show(d)
+                s = d.parent.data.name.replaceAll(" ","_")+".png"
+                d3.select("#lda_vis").html("<img height=200px src='./img/" + s + "'>");
+            }
+        })
         .on("click", zoomTo);
 
 //curved titles approach from https://www.visualcinnamon.com/2015/09/placing-text-on-arcs/
@@ -255,6 +270,7 @@ function draw_circles(data_filter, data_tree) {
 
     //zooming https://bl.ocks.org/mbostock/2206590
     function zoomTo(d) {
+
         var x, y, k;
         if (d && centered !== d) {
             var centroid = [d.x, d.y];
@@ -323,7 +339,8 @@ d3.dsv(",", "products_prepped.csv", function(d) {
         topic_rank: d.topic_rank,
         bubble_color: d.bubble_color,
         bubble_size: d.bubble_size,
-        clean_link: d.clean_link
+        clean_link: d.clean_link,
+        topic_img: d.topic_name + ".png"
     }
 }).then(function(data) {
     var data_results = processDatas(data, rank_sel)
