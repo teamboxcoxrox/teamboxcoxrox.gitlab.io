@@ -92,13 +92,8 @@ function draw_circles(data_filter, data_tree) {
         .attr("y", d => (d.y - d.r) )
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
-        .on('mouseover',  function(d) {
-            if (d.depth != 3){
-                tooltip.hide(d)
-            }else{
-                tooltip.show(d)
-            }
-        })
+        .on('mouseover',  function(d) {if (d.depth != 3){tooltip.hide(d)}
+                                      else{tooltip.show(d)}})
         .on("click", zoomTo);
 
 //curved titles approach from https://www.visualcinnamon.com/2015/09/placing-text-on-arcs/
@@ -127,6 +122,75 @@ function draw_circles(data_filter, data_tree) {
         .attr("startOffset", "50%")
         .text(function(d) {if (d.depth == 1) {return d.data.name}});
 
+    //https://bl.ocks.org/duspviz-mit/9b6dce37101c30ab80d0bf378fe5e583
+    var colorlegendsvg = d3.select("#colorlegend").append("svg")
+        .attr("width", legendwidth)
+        .attr("height", 50)
+        .style("position", "absolute")
+        .attr("class","legend")
+
+    var colorlegend = colorlegendsvg.append("defs").append('g')
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "100%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
+
+    colorlegend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", '#ffffe5')
+        .attr("stop-opacity", 1);
+
+    colorlegend.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", '#005a32')
+        .attr("stop-opacity", 1);
+
+    colorlegendsvg.append("rect")
+        .attr("width", legendwidth)
+        .attr("height", 50)
+        .attr("x", 150)
+        .attr("y", 20)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(0,10)");
+
+    //arrows https://observablehq.com/@harrylove/draw-an-arrowhead-marker-connected-to-a-line-in-d3
+    colorlegendsvg.append('defs')
+        .append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', [0, 0, 20, 20])
+            .attr('refX', 10)
+            .attr('refY', 10)
+            .attr('markerWidth', 10)
+            .attr('markerHeight', 10)
+            .attr('orient', 'auto-start-reverse')
+        .append('path')
+            .attr('d', d3.line()([[0, 0], [0, 20], [20, 10]]))
+            .attr('stroke', 'black');
+
+    colorlegendsvg.append('path')
+        .attr('d', d3.line()([[160, 20],[490, 20]]))
+        .attr('stroke', 'black')
+        .attr('marker-start', 'url(#arrow)')
+        .attr('marker-end', 'url(#arrow)')
+        .attr('fill', 'none');
+
+    colorlegendsvg.append('text')
+        .attr('x', 160)
+        .attr('y', 12)
+        .text('lower sentiment')
+        .style("font-size", 5)
+        .attr('alignment-baseline', 'middle')
+
+    colorlegendsvg.append('text')
+        .attr('x', 360)
+        .attr('y', 12)
+        .text('higher sentiment')
+        .style("font-size", 5)
+        .attr('alignment-baseline', 'middle')
+
     var node_child_values = nodes.filter(function(d) {if (d.depth == 4) {return d}})
     var node_r_values = node_child_values.map(function(d) {return d.r}).sort(d3.ascending)
     var max_child_r = d3.max(node_r_values)
@@ -142,13 +206,33 @@ function draw_circles(data_filter, data_tree) {
         .style("position", "absolute")
         .attr("class","legend")
 
+    var iconnode = legendsvg.selectAll('.iconnode')
+        .data(quant_vals)
+        .enter()
+        .append('g')
+        .attr('class','iconnode')
+
+    iconnode.append("image")
+        .attr("xlink:href", "staricon.svg")
+        .attr("x", legend_xcenter + (max_child_r + 20))
+        .attr("y", legend_ycenter + (quant_vals.length * 25))
+        .attr("width", 20)
+        .attr("height", 20);
+
+    iconnode.append("text")
+        .attr('x', legend_xcenter + (max_child_r + 45))
+        .attr('y', legend_ycenter + (quant_vals.length * 25) + 15)
+        .text('#1 rank')
+        .style("font-size", 10)
+        .attr('alignment-baseline', 'middle')
+
     var legendnode = legendsvg.selectAll(".legendnode")
         .data(quant_vals)
         .enter().append('g')
         .attr("class","legendnode")
 
     legendnode.append("circle")
-        .attr("cy", function(d) {return legend_ycenter - d3.quantile(node_r_values, d)})
+        .attr("cy", function(d) {return legend_ycenter + d3.quantile(node_r_values, d)})
         .attr("cx", legend_xcenter)
         .attr("r", function(d) {return d3.quantile(node_r_values, d)})
         .style("stroke", "black")
@@ -156,7 +240,7 @@ function draw_circles(data_filter, data_tree) {
 
     legendnode.append("text")
         .attr('x', legend_xcenter + (max_child_r + 20))
-        .attr('y', function(d, i) {return legend_ycenter - (i * 25)})
+        .attr('y', function(d, i) {return (legend_ycenter + (i * 25)) +10 })
         .text( function(d){ return (d * 100) + 'th percentile'})
         .style("font-size", 5)
         .attr('alignment-baseline', 'middle')
@@ -164,8 +248,8 @@ function draw_circles(data_filter, data_tree) {
     legendnode.append("line")
         .attr('x1', function(d) {return legend_xcenter + (d3.quantile(node_r_values, d))})
         .attr('x2', legend_xcenter + (max_child_r + 20) - 2)
-        .attr('y1', function(d) {return legend_ycenter - (d3.quantile(node_r_values, d))})
-        .attr('y2', function(d, i) {return (legend_ycenter - (i * 25)) - 5})
+        .attr('y1', function(d) {return legend_ycenter + (d3.quantile(node_r_values, d))})
+        .attr('y2', function(d, i) {return (legend_ycenter + (i * 25)) + 5})
         .attr('stroke', 'black')
         .style('stroke-dasharray', ('2,2'))
 
@@ -262,4 +346,4 @@ d3.dsv(",", "products_prepped.csv", function(d) {
 
 }).catch(function(error) {
     console.log(error);
-});  
+}); 
