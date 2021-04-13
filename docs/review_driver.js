@@ -1,5 +1,5 @@
 var svg = d3.select("svg"),
-    width = 800,
+    width = 650,
     height = width,
     margin = 30,
     diameter = width,
