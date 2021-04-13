@@ -68,8 +68,9 @@ Thanks for your interest in our project!
 
 Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
-### DFTI: Direct Frequency Topic Identification.  
+### DFTI: Direct Frequency Topic Identification
 DFTI is a new approach that the team developed to provide an initial top level categorization of the products based on product reviews.  This approach is described in the python notebook [Product_Categorization_Script_DFTI.ipynb](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/DFTI_categorization).  
+
 To execute this notebook, ensure that a copy of the pets.db is in the same directory as the script.  
 Note:  The script may contain reference to a file pets_all.db.  This is the same SqlLite database, except metadata for the original products are included. For development purposes, we used the smaller pets.db file based on its smaller size. Again, the only difference between pets.db and pets_all.db is that pets_all.db contains a table called products that has metadata about the original amazon products.
 
