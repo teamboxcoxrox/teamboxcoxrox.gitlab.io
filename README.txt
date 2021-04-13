@@ -1,4 +1,5 @@
 A Multifaceted Product Recommendation System
+Team BoxCoxRox (Team 017):  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay
 Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
 ===================== DESCRIPTION =====================
