@@ -1,5 +1,5 @@
 # A Multifaceted Product Recommendation System
-Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
+Visualization Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 ## DESCRIPTION
 
 This repository contains the visualization component and codebase used for all the analytical modelling performed for the team project for Team #017 Boxcoxrox for Georgia Tech CSE 6242 Spring 2021.
@@ -46,7 +46,7 @@ Data for this project can be downloaded with the [Pet_Reviews_Data_Import_Pipeli
 The pets.db database contains 2 tables that hold product information for 205,999 amazon products, and 6,542,483 product recommendations. The overall size of the pets.db database is:  4.7GB
 
 ### 3.  Run the components of the analytic pipeline. This includes running the following analytic models (See EXECUTION section for further details):
-*  DFTI - Direct Frequency Topic Identification
+*  Direct Frequency Topic Identification (DFTI)
 *  Sentiment Analysis
 *  Product Ranking Analysis
 *  Latent Dirichlet Allocation (LDA) Topic Analysis
@@ -68,7 +68,7 @@ Thanks for your interest in our project!
 
 Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
-### DFTI: Direct Frequency Topic Identification
+### Direct Frequency Topic Identification (DFTI)
 DFTI is a new approach that the team developed to provide an initial top level categorization of the products based on product reviews.  This approach is described in the python notebook [Product_Categorization_Script_DFTI.ipynb](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/DFTI_categorization).  
 
 To execute this notebook, ensure that a copy of the pets.db is in the same directory as the script.  
@@ -102,7 +102,7 @@ python sentiment_calculation.py
 Note:  Sentiment on 6,542,483 reviews took 0:36:53.268296 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Product Ranking Analysis: 
+### Product Ranking Analysis
 The goal of product ranking analysis is to rank the products based on the number of stars customers reported as part of their reviews.  The raking is done by the [quantiles.py](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/quantiles) file in the quantiles directory of the code.  This python file loads all of the reviews, and then aggregates them by product (asin).  Next, the code
 calculates the mean, median and standard deviation of the stars.  The code also calculates the average lenth of review text.  More information about how these statistics are used to compute a complete product ranking can be found in the project report.  To calculate product ranking scores, make sure that the pets_all.db file is in the /quantiles directory. (Both the 6,542,483 reviews and the 205,999 product metadata records are required for this calculation.)
 Product ranking results can be calculated with the following command:
@@ -123,7 +123,7 @@ which is described later in this document.
 Note:  Quantiles on 6,542,483 reviews took 0:01:46.475446 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Latent Dirichlet Allocation (LDA) Topic Analysis:  
+### Latent Dirichlet Allocation (LDA) Topic Analysis
 We initially used Spark LDA for the LDA topic analysis but after we developed using our DTFI approach described above, we found that Spark was no longer necessary.  This resulted in a new approach which leveraged Sklearn LDA, which is contained in the LDA_Sklearn directory.  The code for the LDA process is contained in the bcr_LDA.py file in the /LDA_Sklearn directory. The LDA process requires the pets_all.db database, and the categories.csv file described in the DFTI section above. The program retrieves all reviews in a given category, and then performs LDA topic extraction on those documents. Seven topic clusters are defined for each category.
 
 1.  Go into the CODE/LDA_Sklearn folder:
@@ -141,7 +141,7 @@ This command will create the csv file LDA_Category_Topic.csv which will be used 
 Note:  Quantiles on 6,542,483 reviews took 0:01:46.475446 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Link Validation: 
+### Link Validation
 Due to the dynamic nature of Amazon, some of the products that are included in the dataset are no longer active on the platform.  Link validation aims to improve the user experience by not posting links to deactivated products.  Link validation is a batch process similar to the other data processing steps in our pipeline.  The code for link validation is in the /link_validator [directory](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/link_validator).  This code can be run with the following command:
 
 1.  Go into the CODE/link_validator folder:
@@ -179,9 +179,10 @@ jupyter notebook
 Note: The source data for this project included products that were duplicated while others were not related to pets.  We believe that this is due to the fact that occasionally some ASINs get "hijacked" by other products.  In order to address these issues prior to visualization, we have removed duplicated ASINs, and have manually verified that the products that are in our visualization dataset are actually related to pets.  It is highly likely that we have missed some products.
 
 
-### visualization user interface
-To run this code locally, make sure that you have python 3.7 or later. Follow the following steps to deploy the visualization locally:
+### Visualization User Interface
+Hosted application https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
+To run this code locally, make sure that you have python 3.7 or later. Follow the following steps to deploy the visualization locally:
 1.  Go into the /docs folder:
 ``` bash
 cd docs
