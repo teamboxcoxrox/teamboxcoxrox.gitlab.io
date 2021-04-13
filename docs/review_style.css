@@ -81,3 +81,12 @@ div.tooltip {
      color: white;
      text-align: center;
 }
+
+#pirate_kitty {
+    position: fixed;
+    height: 50px;
+    width: 90%;
+    left: 97%;
+    bottom: 10px;
+    visibility: hidden;
+}

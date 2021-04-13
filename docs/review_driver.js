@@ -198,6 +198,12 @@ function draw_circles(data_filter, data_tree) {
         .text('lower sentiment / higher sentiment')
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
+        .on('mouseover',  function(d) {
+            d3.select("div#pirate_kitty").style('visibility','visible')
+        })
+        .on('mouseout', function(d) {
+            d3.select("div#pirate_kitty").style('visibility','hidden')
+        })
 
     // colorlegendsvg.append('text')
     //     .attr('x', 310)
