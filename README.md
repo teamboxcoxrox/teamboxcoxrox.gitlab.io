@@ -2,6 +2,11 @@
 Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 ## DESCRIPTION
 
+The final deliverable of this project is an interactive web-based application that allows users to search for pet
+products that have been organized and prioritized based on extensive analytical techniques applied to customer product
+reviews.  This approach differs from Amazon search interface, which is largely driven by seller. For more information
+about this project, please refer to the complete project report and supporting documents in the DOCS folder.
+
 This repository contains the visualization components for the team project for Team #017 Boxcoxrox for 
 Georgia Tech CSE 6242 for Spring 2021.  The code in this repository provides a visualization for the 
 output of the data processing pipeline found in the boxcoxrox repo.
@@ -13,6 +18,21 @@ To install this code, clone this github repository:
 https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
 Data required for the visualization has been included with the code. 
+
+The following instructions are intended for anyone wishing to attempt to recreate out work.  Please note several things:
+
+1.  This project involves several large files that are downloaded from the internet.
+2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
+    some cases days, to complete.
+3.  This project requires Python 3.7, and numerous libraries.
+
+In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
+please reach out to the BOXCOXROX contact person for installation and implementation questions:
+
+Miles Porter
+(mporter45 at gatech dot com)
+
+Thanks for your interest in our project!
 
 ## EXECUTION - How to run a demo on your code
 
