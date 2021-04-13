@@ -1,4 +1,5 @@
 # A Multifaceted Product Recommendation System
+Team BoxCoxRox (Team 17):  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay
 Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 ## DESCRIPTION
 
@@ -16,16 +17,18 @@ Data required for the visualization has been included with the code.
 
 ## EXECUTION - How to run a demo on your code
 
-To run this code locally, make sure that you have python 3.7 or later.  Then following the 
-follow the following steps:
+To run this code locally, make sure that you have python 3.7 or later. Follow the following steps:
 
 1.  Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 2.  Go into the /docs folder:
+``` bash
+cd docs
+```
 3.  Run the following command:
-
+``` bash
 python -m http.server
-
-4.  Point your browser at  http://localhost:8000
+```
+4.  Point your browser at  http://localhost:8000 or http://0.0.0.0:8000/
 
 ## [Optional, but recommended] DEMO VIDEO -
 
