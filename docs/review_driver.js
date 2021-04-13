@@ -195,7 +195,7 @@ function draw_circles(data_filter, data_tree) {
     colorlegendsvg.append('text')
         .attr('x', 150)
         .attr('y', 12)
-        .text('lower sentiment / higher sentiment')
+        .text('higher sentiment / lower sentiment')
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
         .on('mouseover',  function(d) {
