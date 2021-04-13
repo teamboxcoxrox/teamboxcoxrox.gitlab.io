@@ -5,46 +5,55 @@
 <script type="text/javascript" src="d3-tip.min.js"></script>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="review_style.css">
-	<title>CSE 6242 Team Project Spring 2021 - BoxCoxRox</title>
+    <link rel="stylesheet" type="text/css" href="review_style.css">
+    <title>CSE 6242 Team Project Spring 2021 - BoxCoxRox</title>
 </head>
 <body>
 <script src="review_driver.js"></script>
+<div id="master">
+    <h2>Team #017 BoxCoxRox Multifaceted Product Recommendation Engine</h2>
+    <div id="left">
+        <div class="container">Mouse over the different product bubbles below to discover the perfect product for your
+            favorite pet. Click on a bubble to zoom in.  The size of the bubble reflects the number of reviews
+            for each product, while color represents the average sentiment of reviews for that product.  The best
+            products in each category and topic are indicated with stars.  Finally, click on the link in the tooltip
+            to be redirected to Amazon.com to see the product.  Check out our paper <a href="link to paper">here.</a>
+            <br>
 
-<div id="top">LDA on Product Reviews</div>
+            <table border="0" class="stattable">
+                <tr>
+                    <td>205,999</td>
+                    <td width="15"></td>
+                    <td>6,542,483</td>
+                    <td width="15"></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td><b>Products Processed</b></td>
+                    <td width="15"></td>
+                    <td><b>Reviews Analyzed</b></td>
+                    <td width="15"></td>
+                    <td><b>Analytic Models</b></td>
+                </tr>
+            </table>
 
-<div id="left">
-	<div class="container">We analyzed over X years of Amazon product reviews in the Pet Category to find the very best pet products and now we share the insight with you.
+        </div>
+        <div id="colorlegend"></div>
+        <hr>
+        LDA Topic Distribution
+        <div id="lda_vis"></div>
+        <hr>
+        <div id="legend"></div>
+    </div>
+	<div id="right">
+    Product Ranking Filter: <span id="rank_val">20</span> <input style="width: 300px;" type="range" min="1" max="100"
+                                                                 id="rank_sel" value="5" step='1'>
 
-	<br>	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    <div id="packedbubble"></div>
 
-		<table border="0" class="stattable">
-			<tr>
-				<td>205,999</td>
-				<td width="15"></td>
-				<td>6,542,483</td>
-				<td width="15"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><b>Products Processed</b></td>
-				<td width="15"></td>
-				<td><b>Reviews Analyzed</b></td>
-				<td width="15"></td>
-				<td><b>3rd Impressive Stat</b></td>
-			</tr>
-		</table>
-
-	</div>
-
-	<br></brt>
-	<div id="colorlegend"></div>
-	<div id="legend"></div>
+    </div>
 </div>
-
-Product Ranking Filter: <span id="rank_val">20</span>  <input style="width: 300px;" type="range" min="1" max="100" id="rank_sel" value="5" step='1'>
-
-<div id="packedbubble"></div>
-
+<div id="pirate_kitty"><img src="./img/pirate_kitty.png" width="50" ></div>
+<div id="footer">Copyright 2021, Team #017 BoxCoxRox:  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay</div>
 </body>
 </html>

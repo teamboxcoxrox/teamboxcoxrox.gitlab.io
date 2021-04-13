@@ -1,12 +1,12 @@
 var svg = d3.select("svg"),
-    width = 950,
+    width = 650,
     height = width,
     margin = 30,
     diameter = width,
     centered,
     rank_sel = 20,
-    legendwidth = 500,
-    legendheight = 700;
+    legendwidth = 385,
+    legendheight = 200;
 console.log('hello')
 
 function processDatas(data, rank_sel) {
@@ -40,7 +40,8 @@ function processDatas(data, rank_sel) {
                 title: d.title,
                 description: d.description,
                 topic_rank: d.topic_rank,
-                clean_link: d.clean_link
+                clean_link: d.clean_link,
+                topic_img: d.topic_img
             });
         });
     });
@@ -92,8 +93,22 @@ function draw_circles(data_filter, data_tree) {
         .attr("y", d => (d.y - d.r) )
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
-        .on('mouseover',  function(d) {if (d.depth != 3){tooltip.hide(d)}
-                                      else{tooltip.show(d)}})
+        .on('mouseover',  function(d) {
+            console.log("Level: " + d.depth)
+            if (d.depth != 3){
+                tooltip.hide(d)
+                console.log("Length: " + d.data.children.length)
+                if (d.depth==2) {
+                    s = d.data.name.replaceAll(" ","_")+".png"
+                    d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
+                }
+            }
+            else{
+                tooltip.show(d)
+                s = d.parent.data.name.replaceAll(" ","_")+".png"
+                d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
+            }
+        })
         .on("click", zoomTo);
 
 //curved titles approach from https://www.visualcinnamon.com/2015/09/placing-text-on-arcs/
@@ -151,7 +166,7 @@ function draw_circles(data_filter, data_tree) {
     colorlegendsvg.append("rect")
         .attr("width", legendwidth)
         .attr("height", 50)
-        .attr("x", 150)
+        .attr("x", 50)
         .attr("y", 20)
         .style("fill", "url(#gradient)")
         .attr("transform", "translate(0,10)");
@@ -171,32 +186,38 @@ function draw_circles(data_filter, data_tree) {
             .attr('stroke', 'black');
 
     colorlegendsvg.append('path')
-        .attr('d', d3.line()([[160, 20],[490, 20]]))
+        .attr('d', d3.line()([[60, 20],[375, 20]]))
         .attr('stroke', 'black')
         .attr('marker-start', 'url(#arrow)')
         .attr('marker-end', 'url(#arrow)')
         .attr('fill', 'none');
 
     colorlegendsvg.append('text')
-        .attr('x', 160)
+        .attr('x', 150)
         .attr('y', 12)
-        .text('lower sentiment')
-        .style("font-size", 5)
+        .text('higher sentiment / lower sentiment')
+        .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
+        .on('mouseover',  function(d) {
+            d3.select("div#pirate_kitty").style('visibility','visible')
+        })
+        .on('mouseout', function(d) {
+            d3.select("div#pirate_kitty").style('visibility','hidden')
+        })
 
-    colorlegendsvg.append('text')
-        .attr('x', 360)
-        .attr('y', 12)
-        .text('higher sentiment')
-        .style("font-size", 5)
-        .attr('alignment-baseline', 'middle')
+    // colorlegendsvg.append('text')
+    //     .attr('x', 310)
+    //     .attr('y', 12)
+    //     .text('higher sentiment')
+    //     .style("font-size", 10)
+    //     .attr('alignment-baseline', 'middle')
 
     var node_child_values = nodes.filter(function(d) {if (d.depth == 4) {return d}})
     var node_r_values = node_child_values.map(function(d) {return d.r}).sort(d3.ascending)
     var max_child_r = d3.max(node_r_values)
     var quant_vals = [.50, .75, 1]
 
-    var legend_ycenter = (legendheight/2)
+    var legend_ycenter = (legendheight/2) - 25
     var legend_xcenter = (legendwidth/2)
 
     //bubble legend structure
@@ -242,7 +263,7 @@ function draw_circles(data_filter, data_tree) {
         .attr('x', legend_xcenter + (max_child_r + 20))
         .attr('y', function(d, i) {return (legend_ycenter + (i * 25)) +10 })
         .text( function(d){ return (d * 100) + 'th percentile'})
-        .style("font-size", 5)
+        .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 
     legendnode.append("line")
@@ -255,6 +276,7 @@ function draw_circles(data_filter, data_tree) {
 
     //zooming https://bl.ocks.org/mbostock/2206590
     function zoomTo(d) {
+
         var x, y, k;
         if (d && centered !== d) {
             var centroid = [d.x, d.y];
@@ -323,7 +345,8 @@ d3.dsv(",", "products_prepped.csv", function(d) {
         topic_rank: d.topic_rank,
         bubble_color: d.bubble_color,
         bubble_size: d.bubble_size,
-        clean_link: d.clean_link
+        clean_link: d.clean_link,
+        topic_img: d.topic_name + ".png"
     }
 }).then(function(data) {
     var data_results = processDatas(data, rank_sel)

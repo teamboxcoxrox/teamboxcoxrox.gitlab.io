@@ -23,6 +23,13 @@ div.tooltip {
     font-family: Verdana
 }
 
+#master{
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
 #top{
     float: top;
     height: 90px;
@@ -32,24 +39,54 @@ div.tooltip {
 #left{
     float: left;
     width: 33%;
-    height: 950px;
+    height: 900px;
+    margin-right: 10px;
 }
 
 
 #right{
-    float: right;
-    width: 950px;
-    height: 950px;
+    float: left;
+    width: 800px;
+    height: 900px;
 }
 
+#lda_vis{
+    position: relative;
+    width: 300px;
+    height: 325px;
+}
 
 #legend{
     position: relative;
-    bottom: 0;
+    width: 500px;
+    height: 200px;
 }
 
+#colorlegend{
+    position: relative;
+    width: 500px;
+    height: 50px;
+}
 
 #packedbubble{
-    float: right;
-    width: 66%;
+    background-color: aquamarine;
+}
+
+#footer{
+     position: fixed;
+     left: 5;
+     bottom: 0;
+     width: 100%;
+     background-color: forestgreen;
+     color: white;
+     text-align: center;
+}
+
+#pirate_kitty {
+    position: fixed;
+    height: 50px;
+    width: 90%;
+    left: 97%;
+    bottom: 10px;
+    visibility: hidden;
 }
