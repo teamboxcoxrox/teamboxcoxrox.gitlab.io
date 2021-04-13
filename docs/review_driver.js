@@ -1,12 +1,12 @@
 var svg = d3.select("svg"),
-    width = 950,
+    width = 900,
     height = width,
     margin = 30,
     diameter = width,
     centered,
     rank_sel = 20,
-    legendwidth = 500,
-    legendheight = 700;
+    legendwidth = 385,
+    legendheight = 200;
 console.log('hello')
 
 function processDatas(data, rank_sel) {
@@ -100,13 +100,13 @@ function draw_circles(data_filter, data_tree) {
                 console.log("Length: " + d.data.children.length)
                 if (d.depth==2) {
                     s = d.data.name.replaceAll(" ","_")+".png"
-                    d3.select("#lda_vis").html("<img height=200px src='./img/" + s + "'>");
+                    d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
                 }
             }
             else{
                 tooltip.show(d)
                 s = d.parent.data.name.replaceAll(" ","_")+".png"
-                d3.select("#lda_vis").html("<img height=200px src='./img/" + s + "'>");
+                d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
             }
         })
         .on("click", zoomTo);
@@ -166,7 +166,7 @@ function draw_circles(data_filter, data_tree) {
     colorlegendsvg.append("rect")
         .attr("width", legendwidth)
         .attr("height", 50)
-        .attr("x", 150)
+        .attr("x", 50)
         .attr("y", 20)
         .style("fill", "url(#gradient)")
         .attr("transform", "translate(0,10)");
@@ -186,24 +186,24 @@ function draw_circles(data_filter, data_tree) {
             .attr('stroke', 'black');
 
     colorlegendsvg.append('path')
-        .attr('d', d3.line()([[160, 20],[490, 20]]))
+        .attr('d', d3.line()([[60, 20],[375, 20]]))
         .attr('stroke', 'black')
         .attr('marker-start', 'url(#arrow)')
         .attr('marker-end', 'url(#arrow)')
         .attr('fill', 'none');
 
     colorlegendsvg.append('text')
-        .attr('x', 160)
+        .attr('x', 50)
         .attr('y', 12)
         .text('lower sentiment')
-        .style("font-size", 5)
+        .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 
     colorlegendsvg.append('text')
-        .attr('x', 360)
+        .attr('x', 310)
         .attr('y', 12)
         .text('higher sentiment')
-        .style("font-size", 5)
+        .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 
     var node_child_values = nodes.filter(function(d) {if (d.depth == 4) {return d}})
@@ -211,7 +211,7 @@ function draw_circles(data_filter, data_tree) {
     var max_child_r = d3.max(node_r_values)
     var quant_vals = [.50, .75, 1]
 
-    var legend_ycenter = (legendheight/2)
+    var legend_ycenter = (legendheight/2) - 25
     var legend_xcenter = (legendwidth/2)
 
     //bubble legend structure
@@ -257,7 +257,7 @@ function draw_circles(data_filter, data_tree) {
         .attr('x', legend_xcenter + (max_child_r + 20))
         .attr('y', function(d, i) {return (legend_ycenter + (i * 25)) +10 })
         .text( function(d){ return (d * 100) + 'th percentile'})
-        .style("font-size", 5)
+        .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 
     legendnode.append("line")
@@ -302,7 +302,7 @@ var pack = d3.pack()
 
 function set_tooltip(data) {
     //  console.log(data)
-    if (data.children[0].clean_link = 1) {
+    if (data.children[0].clean_link == 1) {
         HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
                        <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
                        <br><br></btr>${data.children[0].description} 

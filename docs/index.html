@@ -5,48 +5,57 @@
 <script type="text/javascript" src="d3-tip.min.js"></script>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="review_style.css">
-	<title>CSE 6242 Team Project Spring 2021 - BoxCoxRox</title>
+    <link rel="stylesheet" type="text/css" href="review_style.css">
+    <title>CSE 6242 Team Project Spring 2021 - BoxCoxRox</title>
 </head>
 <body>
 <script src="review_driver.js"></script>
 
-<div id="top">LDA on Product Reviews</div>
+<div id="master">
+    <h2>Team #017 BoxCoxRox Multifaceted Product Recommendation Engine</h2>
+    <div id="left">
+        <div class="container">We used multiple machine learning and natural language processing techniques to
+            analyze over 5 million reviews of pet products from Amazon.com to help you find just what
+            you are looking for. Mouse over the different product categories at the right to discover what's best for
+            you.
+            The size of the bubble reflects the number of people that have reviewed the product. The lighter the color,
+            the
+            more positive the review. Products with the stars are ranked as the very best in their particular category
+            and
+            topic. Finally, click on the link in the tooltip to be redirected to Amazon.com to see the product!
+            <br>
 
-<div id="left">
-	<div class="container">We analyzed over X years of Amazon product reviews in the Pet Category to find the very best pet products and now we share the insight with you.
+            <table border="0" class="stattable">
+                <tr>
+                    <td>205,999</td>
+                    <td width="15"></td>
+                    <td>6,542,483</td>
+                    <td width="15"></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td><b>Products Processed</b></td>
+                    <td width="15"></td>
+                    <td><b>Reviews Analyzed</b></td>
+                    <td width="15"></td>
+                    <td><b>Analytic Models</b></td>
+                </tr>
+            </table>
 
-	<br>	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </div>
+        <div id="colorlegend"></div>
+        <div id="legend"></div>
+        <hr>
+        LDA Topic Distribution
+        <div id="lda_vis"></div>
+        <hr>
+    </div>
+	<div id="right">
+    Product Ranking Filter: <span id="rank_val">20</span> <input style="width: 300px;" type="range" min="1" max="100"
+                                                                 id="rank_sel" value="5" step='1'>
 
-		<table border="0" class="stattable">
-			<tr>
-				<td>205,999</td>
-				<td width="15"></td>
-				<td>6,542,483</td>
-				<td width="15"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><b>Products Processed</b></td>
-				<td width="15"></td>
-				<td><b>Reviews Analyzed</b></td>
-				<td width="15"></td>
-				<td><b>3rd Impressive Stat</b></td>
-			</tr>
-		</table>
-
-	</div>
-
-	<br></brt>
-	<div id="lda_vis"></div>
-	<div id="colorlegend"></div>
-	<div id="legend"></div>
-
+    <div id="packedbubble"></div>
+		</div>
 </div>
-
-Product Ranking Filter: <span id="rank_val">20</span>  <input style="width: 300px;" type="range" min="1" max="100" id="rank_sel" value="5" step='1'>
-
-<div id="packedbubble"></div>
-
 </body>
 </html>
