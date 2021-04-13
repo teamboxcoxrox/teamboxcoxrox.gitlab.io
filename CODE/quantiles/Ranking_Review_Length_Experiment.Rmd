@@ -1,0 +1,69 @@
+---
+title: 'Review Text Length and Ratings Experiment '
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+Team BoxCoxRox (Team 17):  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay
+
+
+# Introduction
+
+The purpose of this notebook will be to explore the relationship between the length of reviews, and the number of stars given in a review.  If there appears to be a positive correlation, then it may make sense to use review length as a "tie breaker" when it comes to determinig the absolute raking of products based on user "stars."
+
+For statistical purposes, we will begin with the following null hypothesis, and hope to reject it.
+
+H_o: Higher product ratings (stars) are not correlated with the length of review text.
+
+The following code will load the necessary libraries and the data:
+
+```{r}
+library(dplyr)
+library(tidyverse)
+
+df = read.csv('ranking_output.csv')
+summary(df)
+```
+# Method
+
+In order to increase the number of valid reviews, the following code will limit test dataset to just those reviews that are verified and have a length betwenn 18 and 50 (the middle 50% of the data) characters.  Histograms are displayed to give an idea of the distribution of the length of review text as well as the number of stars given as part of reviews.
+
+```{r}
+df <- df %>% filter(df$average_length_of_review_text>18)
+df <- df %>% filter(df$average_length_of_review_text<50)
+df <- df %>% filter(df$overall_count>2)
+hist(df$average_length_of_review_text)
+hist(df$overall_average)
+```
+
+Again, the goal of this experiment is to see if there is a strong correlation between product average ranking and  average review length.  To see if there is a relationship, we now graph a random sample of 10000 products.  For each product we will plot the product average ranking vs average review length.  For this experiment, our dependent variable is average product ranking (y), and the independent variable (x) is average overall review length.
+
+
+```{r fig.width=4, fig.height=4}
+df_sample <- sample_n(df, 1000)
+plot(df_sample$average_length_of_review_text, df_sample$overall_average, xlab="Ave. Review Length", pch=19, cex=.3, 
+     ylab="Average Rating (Stars)", main="Ratings vs Review Length")
+reg = lm(overall_average~average_length_of_review_text, data=df_sample)
+x = df$average_length_of_review_text
+newx = seq(min(x),max(x),by = 1)
+
+conf_interval <- predict(reg, newdata=data.frame(average_length_of_review_text=newx), interval="confidence",
+                         level = 0.95)
+
+
+abline(reg, col="red")
+lines(newx, conf_interval[,2], col="blue", lty=2)
+lines(newx, conf_interval[,3], col="blue", lty=2)
+summary(reg)
+par(mfrow=c(2,2))
+plot(reg)
+```
+
+# Results
+
+As can be seen in the graph and summary above, not only is the R-Squared value of this data extremely low, the  coefficient of average_length_of_review_text, while statistically significant with a P value of 0.001, is actually negative!  We would expect this to be positive.  
+
+In this case, we have shown that while the review text length and the number of stars are correlated, they are NOT positively correlated.
+
+In other words, we have failed to show that higher mean review text length is associated with consistenly higher ratings.
