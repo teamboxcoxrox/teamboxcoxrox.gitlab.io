@@ -193,18 +193,18 @@ function draw_circles(data_filter, data_tree) {
         .attr('fill', 'none');
 
     colorlegendsvg.append('text')
-        .attr('x', 50)
+        .attr('x', 150)
         .attr('y', 12)
-        .text('lower sentiment')
+        .text('lower sentiment / higher sentiment')
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 
-    colorlegendsvg.append('text')
-        .attr('x', 310)
-        .attr('y', 12)
-        .text('higher sentiment')
-        .style("font-size", 10)
-        .attr('alignment-baseline', 'middle')
+    // colorlegendsvg.append('text')
+    //     .attr('x', 310)
+    //     .attr('y', 12)
+    //     .text('higher sentiment')
+    //     .style("font-size", 10)
+    //     .attr('alignment-baseline', 'middle')
 
     var node_child_values = nodes.filter(function(d) {if (d.depth == 4) {return d}})
     var node_r_values = node_child_values.map(function(d) {return d.r}).sort(d3.ascending)
