@@ -1,22 +1,25 @@
-# A Multifaceted Product Recommendation System
+A Multifaceted Product Recommendation System
 Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
-## DESCRIPTION
 
-This repository contains the visualization components for the team project for Team #017 Boxcoxrox for 
-Georgia Tech CSE 6242 for Spring 2021.  The code in this repository provides a visualization for the 
+===================== DESCRIPTION =====================
+
+This repository contains the visualization components for the team project for Team #017 Boxcoxrox for
+Georgia Tech CSE 6242 for Spring 2021.  The code in this repository provides a visualization for the
 output of the data processing pipeline found in the boxcoxrox repo.
 
-## INSTALLATION - How to install and setup your code
+===================== INSTALLATION =====================
+How to install and setup this code...
 
-To install this code, clone this github repository:  
+To install this code, clone this github repository:
 
 https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
-Data required for the visualization has been included with the code. 
+Data required for the visualization has been included with the code.
 
-## EXECUTION - How to run a demo on your code
+===================== EXECUTION =====================
+How to run the code locally
 
-To run this code locally, make sure that you have python 3.7 or later.  Then following the 
+To run this code locally, make sure that you have python 3.7 or later.  Then following the
 follow the following steps:
 
 1.  Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
@@ -27,7 +30,9 @@ python -m http.server
 
 4.  Point your browser at  http://localhost:8000
 
-## [Optional, but recommended] DEMO VIDEO -
+===================== DEMO VIDEO =====================
+
+(Coming soon.)
 
 For a complete overview of the Multifaceted Product Recommendation System, please refer to the project
 report.  A copy of which can be found in the main project github repository:
