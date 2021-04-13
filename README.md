@@ -41,11 +41,14 @@ follow the following steps:
 
 1.  Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 2.  Go into the /docs folder:
+``` bash
+cd docs
+```
 3.  Run the following command:
-
+``` bash
 python -m http.server
-
-4.  Point your browser at  http://localhost:8000
+```
+4.  Point your browser at  http://localhost:8000 or http://0.0.0.0:8000/
 
 ## [Optional, but recommended] DEMO VIDEO -
 
