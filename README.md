@@ -52,14 +52,16 @@ The pets.db database contains 2 tables that hold product information for 205,999
 
 ### 3.  Run the components of the analytic pipeline. This includes running the following analytic models (See EXECUTION section for further details):
 *  [Direct Frequency Topic Identification (DFTI)](#Direct-Frequency-Topic-Identification)
-*  Sentiment Analysis
-*  Product Ranking Analysis
-*  Latent Dirichlet Allocation (LDA) Topic Analysis
-*  Link Validation
+*  [Sentiment Analysis](#Sentiment-Analysis)
+*  [Product Ranking Analysis](#Product-Ranking-Analysis)
+*  [Latent Dirichlet Allocation (LDA) Topic Analysis](#Latent-Dirichlet-Allocation-LDA-Topic-Analysis)
+*  [Link Validation](#Link-Validation)
 
-### 4.  Final Data Aggregation - Aggregate the output of the analytic pipeline by running the recommendation builder notebook (See EXECUTION section for further details).
+### 4.  Final Data Aggregation - Aggregate the output of the analytic pipeline by running the recommendation builder notebook 
+See EXECUTION section: [Final Data Aggregation](#Final-Data-Aggregation) for further details)
 
-### 5.  Execute the visualization user interface (See EXECUTION section for further details)
+### 5.  Execute the visualization user interface 
+See EXECUTION section: [Visualization User Interface](#Visualization-User-Interface) for further details
 
 In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
 please reach out to the BOXCOXROX contact person for installation and implementation questions:
