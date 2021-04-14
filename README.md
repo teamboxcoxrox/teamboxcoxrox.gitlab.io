@@ -170,7 +170,7 @@ per product.  To validate all products, it would take around 150 hours, or 6.25 
 ### Final Data Aggregation
 Final data aggregation is performed by the [Recommendations_builder.ipynb](https://github.com/fractalbass/boxcoxrox/tree/main/pets/CODE/aggregator) in the /aggregator directory. This jupyter notebook generates a final CSV file that is used in the visualization. Instructions for running the recommendation builder are included as part of the notebook.  The final results of this notebook are saved in a CSV file called products_prepped.csv that is used as part of the product visualization.
 
-1.  Go into the ODE/aggregator folder:
+1.  Go into the CODE/aggregator folder:
 ``` bash
 cd CODE/aggregator
 ```
