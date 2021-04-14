@@ -29,7 +29,12 @@ Recreating the work described in the project report consists of the following st
 
 ### 1.  Prerequisite python version and required libraries.
 
-Required libraries are listed in the requirements.txt file in the project repository.  The following command can be used in order to install the required libraries:
+Required libraries are listed in the [requirements.txt](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE) file in the project repository.  The following command can be used in order to install the required libraries:
+1.  Go into the CODE folder:
+``` bash
+cd CODE
+```
+2.  Run pip install using requirements.txt
 ``` bash
 pip install -r requirements.txt
 ```
