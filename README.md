@@ -51,7 +51,7 @@ Data for this project can be downloaded with the [Pet_Reviews_Data_Import_Pipeli
 The pets.db database contains 2 tables that hold product information for 205,999 amazon products, and 6,542,483 product recommendations. The overall size of the pets.db database is:  4.7GB
 
 ### 3.  Run the components of the analytic pipeline. This includes running the following analytic models (See EXECUTION section for further details):
-*  Direct Frequency Topic Identification (DFTI)
+*  [Direct Frequency Topic Identification (DFTI)](#Direct-Frequency-Topic-Identification)
 *  Sentiment Analysis
 *  Product Ranking Analysis
 *  Latent Dirichlet Allocation (LDA) Topic Analysis
@@ -73,7 +73,7 @@ Thanks for your interest in our project!
 
 Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
-### Direct Frequency Topic Identification (DFTI)
+### Direct Frequency Topic Identification
 DFTI is a new approach that the team developed to provide an initial top level categorization of the products based on product reviews.  This approach is described in the python notebook [Product_Categorization_Script_DFTI.ipynb](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/DFTI_categorization).  
 
 To execute this notebook, ensure that a copy of the pets.db is in the same directory as the script.  
