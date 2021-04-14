@@ -1,6 +1,6 @@
 # A Multifaceted Product Recommendation System
 Visualization Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
-## DESCRIPTION
+### DESCRIPTION
 
 This repository contains the visualization component and codebase used for all the analytical modelling performed for the team project for Team #017 Boxcoxrox for Georgia Tech CSE 6242 Spring 2021.
 
@@ -9,7 +9,7 @@ products that have been organized and prioritized based on extensive analytical 
 reviews.  This approach differs from Amazon search interface, which is largely driven by seller. For more information
 about this project, please refer to the complete project report and supporting documents in the DOCS folder.
 
-## INSTALLATION - How to install and setup your code
+### INSTALLATION - How to install and setup your code
 
 To install this code, clone this github repository:  
 https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
@@ -22,12 +22,9 @@ The following instructions are intended for anyone wishing to attempt to recreat
     some cases days, to complete.
 3.  This project requires Python 3.7, and numerous libraries.
 
-
-https://pip.pypa.io/en/stable/reference/pip_install/
-
 Recreating the work described in the project report consists of the following steps:
 
-### 1.  Prerequisite python version and required libraries.
+#### 1.  Prerequisite python version and required libraries.
 
 Required libraries are listed in the [requirements.txt](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE) file in the project repository.  The following command can be used in order to install the required libraries:
 1.  Go into the CODE folder:
@@ -45,22 +42,22 @@ Jupyter is required to run some of the ipynb used in the pipeline. Please refer 
 Note: Separate javascript libraries are required for the visualization part of this application.  Those libraries are
 contained in the visualization folder in the project repository.
 
-### 2.  Download and preprocess source data.
+#### 2.  Download and preprocess source data.
 Data for this project can be downloaded with the [Pet_Reviews_Data_Import_Pipeline.ipynb](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/preprocess). This notebook contains code that downloads data from the source data repository, pre-processes and restructures that data  and then creates pets.db, which is a Sqlite3 databased used by the data analytics pipeline components described in the next section. 
 
 The pets.db database contains 2 tables that hold product information for 205,999 amazon products, and 6,542,483 product recommendations. The overall size of the pets.db database is:  4.7GB
 
-### 3.  Run the components of the analytic pipeline. This includes running the following analytic models (See EXECUTION section for further details):
+#### 3.  Run the components of the analytic pipeline. This includes running the following analytic models (See EXECUTION section for further details):
 *  [Direct Frequency Topic Identification (DFTI)](#Direct-Frequency-Topic-Identification)
 *  [Sentiment Analysis](#Sentiment-Analysis)
 *  [Product Ranking Analysis](#Product-Ranking-Analysis)
 *  [Latent Dirichlet Allocation (LDA) Topic Analysis](#Latent-Dirichlet-Allocation-LDA-Topic-Analysis)
 *  [Link Validation](#Link-Validation)
 
-### 4.  Final Data Aggregation - Aggregate the output of the analytic pipeline by running the recommendation builder notebook 
+#### 4.  Final Data Aggregation - Aggregate the output of the analytic pipeline by running the recommendation builder notebook 
 See EXECUTION section: [Final Data Aggregation](#Final-Data-Aggregation) for further details)
 
-### 5.  Execute the visualization user interface 
+#### 5.  Execute the visualization user interface 
 See EXECUTION section: [Visualization User Interface](#Visualization-User-Interface) for further details
 
 In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
@@ -71,11 +68,11 @@ Miles Porter
 
 Thanks for your interest in our project!
 
-## EXECUTION - How to run a demo on your code
+### EXECUTION - How to run a demo on your code
 
 Clone this repo git  https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io
 
-### Direct Frequency Topic Identification
+#### Direct Frequency Topic Identification
 DFTI is a new approach that the team developed to provide an initial top level categorization of the products based on product reviews.  This approach is described in the python notebook [Product_Categorization_Script_DFTI.ipynb](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/DFTI_categorization).  
 
 To execute this notebook, ensure that a copy of the pets.db is in the same directory as the script.  
@@ -96,7 +93,7 @@ The output of the DFTI process is a single file, category.csv.  This file should
 required as part of the LDA process for reviews in each of the product categories. The LDA_Sklearn process will be
 discussed later in this document.
 
-### Sentiment Analysis
+#### Sentiment Analysis
 This analysis uses the Vader sentiment analysis tool, which evaluates text and returns a sentiment score from -1 to 1.  For more information on Vader, please refer to the complete project report.  Code that runs Vader on the pet reviews is contained in the sentiment directory and is called [sentiment_calculation.py](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/sentiment).  This is a python script (not a jupyter notebook) and can be run from the command line.  The program can be executed like so:
 1.  Go into the CODE/sentiment folder:
 ``` bash
@@ -109,7 +106,7 @@ python sentiment_calculation.py
 Note:  Sentiment on 6,542,483 reviews took 0:36:53.268296 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Product Ranking Analysis
+#### Product Ranking Analysis
 The goal of product ranking analysis is to rank the products based on the number of stars customers reported as part of their reviews.  The raking is done by the [quantiles.py](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/quantiles) file in the quantiles directory of the code.  This python file loads all of the reviews, and then aggregates them by product (asin).  Next, the code
 calculates the mean, median and standard deviation of the stars.  The code also calculates the average lenth of review text.  More information about how these statistics are used to compute a complete product ranking can be found in the project report.  To calculate product ranking scores, make sure that the pets_all.db file is in the /quantiles directory. (Both the 6,542,483 reviews and the 205,999 product metadata records are required for this calculation.)
 Product ranking results can be calculated with the following command:
@@ -130,7 +127,7 @@ which is described later in this document.
 Note:  Quantiles on 6,542,483 reviews took 0:01:46.475446 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Latent Dirichlet Allocation (LDA) Topic Analysis
+#### Latent Dirichlet Allocation (LDA) Topic Analysis
 We initially used Spark LDA for the LDA topic analysis but after we developed using our DTFI approach described above, we found that Spark was no longer necessary.  This resulted in a new approach which leveraged Sklearn LDA, which is contained in the LDA_Sklearn directory.  The code for the LDA process is contained in the bcr_LDA.py file in the /LDA_Sklearn directory. The LDA process requires the pets_all.db database, and the categories.csv file described in the DFTI section above. The program retrieves all reviews in a given category, and then performs LDA topic extraction on those documents. Seven topic clusters are defined for each category.
 
 1.  Go into the CODE/LDA_Sklearn folder:
@@ -148,7 +145,7 @@ This command will create the csv file LDA_Category_Topic.csv which will be used 
 Note:  Quantiles on 6,542,483 reviews took 0:01:46.475446 running on a Intel® Core™ i5-7600K CPU @ 3.80GHz × 4  with 32
 GB of ram running Ubuntu 20.04.
 
-### Link Validation
+#### Link Validation
 Due to the dynamic nature of Amazon, some of the products that are included in the dataset are no longer active on the platform.  Link validation aims to improve the user experience by not posting links to deactivated products.  Link validation is a batch process similar to the other data processing steps in our pipeline.  The code for link validation is in the /link_validator [directory](https://github.com/teamboxcoxrox/teamboxcoxrox.gitlab.io/tree/refactor-codebase/CODE/link_validator).  This code can be run with the following command:
 
 1.  Go into the CODE/link_validator folder:
@@ -169,7 +166,7 @@ is a .csv file that is used in the aggregation process covered in the next secti
 Note:  We performed link validation only for the top ranked products.  Link validation take approximately 2.7 seconds
 per product.  To validate all products, it would take around 150 hours, or 6.25 24-hour days.
 
-### Final Data Aggregation
+#### Final Data Aggregation
 Final data aggregation is performed by the [Recommendations_builder.ipynb](https://github.com/fractalbass/boxcoxrox/tree/main/pets/CODE/aggregator) in the /aggregator directory. This jupyter notebook generates a final CSV file that is used in the visualization. Instructions for running the recommendation builder are included as part of the notebook.  The final results of this notebook are saved in a CSV file called products_prepped.csv that is used as part of the product visualization.
 
 1.  Go into the CODE/aggregator folder:
@@ -186,7 +183,7 @@ jupyter notebook
 Note: The source data for this project included products that were duplicated while others were not related to pets.  We believe that this is due to the fact that occasionally some ASINs get "hijacked" by other products.  In order to address these issues prior to visualization, we have removed duplicated ASINs, and have manually verified that the products that are in our visualization dataset are actually related to pets.  It is highly likely that we have missed some products.
 
 
-### Visualization User Interface
+#### Visualization User Interface
 Hosted application https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
 To run this code locally, make sure that you have python 3.7 or later. Follow the following steps to deploy the visualization locally:
@@ -201,7 +198,7 @@ python -m http.server
 3.  Point your browser at  http://localhost:8000 or http://0.0.0.0:8000/
 
 
-## [Optional, but recommended] DEMO VIDEO -
+### [Optional, but recommended] DEMO VIDEO -
 
 
 
