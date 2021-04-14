@@ -74,7 +74,7 @@ DFTI is a new approach that the team developed to provide an initial top level c
 To execute this notebook, ensure that a copy of the pets.db is in the same directory as the script.  
 Note:  The script may contain reference to a file pets_all.db.  This is the same SqlLite database, except metadata for the original products are included. For development purposes, we used the smaller pets.db file based on its smaller size. Again, the only difference between pets.db and pets_all.db is that pets_all.db contains a table called products that has metadata about the original amazon products.
 
-1.  Go into the ODE/DFTI_categorization folder:
+1.  Go into the CODE/DFTI_categorization folder:
 ``` bash
 cd CODE/DFTI_categorization
 ```
