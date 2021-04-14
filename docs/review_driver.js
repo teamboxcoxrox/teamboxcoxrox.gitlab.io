@@ -7,13 +7,14 @@ var svg = d3.select("svg"),
     rank_sel = 20,
     legendwidth = 385,
     legendheight = 200;
-console.log('hello')
+//console.log('hello')
 
 function processDatas(data, rank_sel) {
     var data_filter = data.filter(function (d) {return d.topic_rank <= rank_sel;})
     var data_tree = {name: "root", children: []},
         levels = ["category", "topic_name", "asin"];
 
+    //convert flat file to hierarchy https://bl.ocks.org/fogonwater/c6c890355d85c3a7ec7566b111de9a2b
     data_filter.forEach(function (d) {
         // Keep this as a reference to the current level
         var depthCursor = data_tree.children;
@@ -49,13 +50,16 @@ function processDatas(data, rank_sel) {
 }
 
 function draw_circles(data_filter, data_tree) {
-    var colorchoices = ['#005a32','#238443','#41ab5d','#78c679','#addd8e','#d9f0a3','#f7fcb9','#ffffe5'];
+    var colorchoices = ['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32'];
     var mincolor = d3.min(data_filter, function(d){return d.bubble_color;})
     var maxcolor = d3.max(data_filter, function(d){return d.bubble_color})
 
     var colorscale = d3.scaleQuantize()
         .domain([mincolor,maxcolor])
         .range(colorchoices);
+
+    //packed circle concept and approach https://observablehq.com/@d3/zoomable-circle-packing
+    //used this as a starter template however deviated quite a bit as our needs and customizations expanded
 
     root = d3.hierarchy(data_tree)
         .sum(function(d) { return d.value; })
@@ -94,10 +98,10 @@ function draw_circles(data_filter, data_tree) {
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
         .on('mouseover',  function(d) {
-            console.log("Level: " + d.depth)
-            if (d.depth != 3){
+        //    console.log("Level: " + d.depth)
+            if (d.depth != 3) {
                 tooltip.hide(d)
-                console.log("Length: " + d.data.children.length)
+         //       console.log("Length: " + d.data.children.length)
                 if (d.depth==2) {
                     s = d.data.name.replaceAll(" ","_")+".png"
                     d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
@@ -192,10 +196,10 @@ function draw_circles(data_filter, data_tree) {
         .attr('marker-end', 'url(#arrow)')
         .attr('fill', 'none');
 
-    colorlegendsvg.append('text')
-        .attr('x', 150)
+    colorlegendsvg.append('g').append('text')
+        .attr('x', 70)
         .attr('y', 12)
-        .text('higher sentiment / lower sentiment')
+        .text('lower sentiment / higher sentiment')
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
         .on('mouseover',  function(d) {
@@ -329,7 +333,7 @@ var tooltip = d3.tip()
     .attr("padding", "10px")
     .html(function(d) { if (d.depth == 3 ) {return set_tooltip(d.data); }});
 
-var depthcolorchoices = ['#f7f7f7','#525252']
+var depthcolorchoices = ['#ffffff','#525252']
 var depthcolor = d3.scaleLinear()
     .domain([-1, 1]) //depth count
     .range(depthcolorchoices)
