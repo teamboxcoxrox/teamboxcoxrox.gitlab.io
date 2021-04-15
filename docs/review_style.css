@@ -46,6 +46,7 @@ div.tooltip {
 
 #right{
     float: left;
+    font-size: 10pt;
     width: 800px;
     height: 900px;
 }
