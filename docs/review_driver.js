@@ -5,7 +5,7 @@ var svg = d3.select("svg"),
     diameter = width,
     centered,
     rank_sel = 20,
-    sent_sel = 0,
+    sent_sel = .1,
     legendwidth = 385,
     legendheight = 200;
 //console.log('hello')
