@@ -5,12 +5,14 @@ var svg = d3.select("svg"),
     diameter = width,
     centered,
     rank_sel = 20,
+    sent_sel = .5,
     legendwidth = 385,
     legendheight = 200;
 //console.log('hello')
 
-function processDatas(data, rank_sel) {
-    var data_filter = data.filter(function (d) {return d.topic_rank <= rank_sel;})
+function processDatas(data, rank_sel, sent_sel) {
+    var data_filter = data.filter(function (d) {return d.topic_rank <= rank_sel && d.bubble_color >= sent_sel;})
+
     var data_tree = {name: "root", children: []},
         levels = ["category", "topic_name", "asin"];
 
@@ -98,10 +100,10 @@ function draw_circles(data_filter, data_tree) {
         .attr("width", d => d.r * 2)
         .attr("height", d => d.r * 2)
         .on('mouseover',  function(d) {
-        //    console.log("Level: " + d.depth)
+            //    console.log("Level: " + d.depth)
             if (d.depth != 3) {
                 tooltip.hide(d)
-         //       console.log("Length: " + d.data.children.length)
+                //       console.log("Length: " + d.data.children.length)
                 if (d.depth==2) {
                     s = d.data.name.replaceAll(" ","_")+".png"
                     d3.select("#lda_vis").html("<img height=300px src='./img/" + s + "'>");
@@ -178,16 +180,16 @@ function draw_circles(data_filter, data_tree) {
     //arrows https://observablehq.com/@harrylove/draw-an-arrowhead-marker-connected-to-a-line-in-d3
     colorlegendsvg.append('defs')
         .append('marker')
-            .attr('id', 'arrow')
-            .attr('viewBox', [0, 0, 20, 20])
-            .attr('refX', 10)
-            .attr('refY', 10)
-            .attr('markerWidth', 10)
-            .attr('markerHeight', 10)
-            .attr('orient', 'auto-start-reverse')
+        .attr('id', 'arrow')
+        .attr('viewBox', [0, 0, 20, 20])
+        .attr('refX', 10)
+        .attr('refY', 10)
+        .attr('markerWidth', 10)
+        .attr('markerHeight', 10)
+        .attr('orient', 'auto-start-reverse')
         .append('path')
-            .attr('d', d3.line()([[0, 0], [0, 20], [20, 10]]))
-            .attr('stroke', 'black');
+        .attr('d', d3.line()([[0, 0], [0, 20], [20, 10]]))
+        .attr('stroke', 'black');
 
     colorlegendsvg.append('path')
         .attr('d', d3.line()([[60, 20],[375, 20]]))
@@ -314,12 +316,12 @@ function set_tooltip(data) {
     //  console.log(data)
     if (data.children[0].clean_link == 1) {
         HTMLstring =  `<center><a href="http://www.amazon.com/gp/product/${data.name}" target="_blank" rel="noopener noreferrer">${data.children[0].title}</a></center>
-                       <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
+                       <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> .${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
                        <br><br></btr>${data.children[0].description} 
                 ` }
     else {
         HTMLstring =  `<center>${data.children[0].title} (Discontinued)</center>
-                        <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> ${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
+                        <br><center><b>Rank: </b> ${data.children[0].topic_rank} <b>Sentiment: </b> .${Math.round(data.children[0].bubble_color * 100)} <b>Ratings: </b> ${data.children[0].value}</center>
                         <br></btr>${data.children[0].description}
                         `}
     HTMLstring = HTMLstring.replaceAll('-1','N/A').replaceAll('nan','')
@@ -346,14 +348,14 @@ d3.dsv(",", "products_prepped.csv", function(d) {
         description: d.description,
         category: d.category,
         topic_name: d.topic_name,
-        topic_rank: d.topic_rank,
+        topic_rank: +d.topic_rank + 1,
         bubble_color: d.bubble_color,
         bubble_size: d.bubble_size,
         clean_link: d.clean_link,
         topic_img: d.topic_name + ".png"
     }
 }).then(function(data) {
-    var data_results = processDatas(data, rank_sel)
+    var data_results = processDatas(data, rank_sel, sent_sel)
     var data_filter = data_results['data_filter']
     var data_tree = data_results['data_tree']
 
@@ -363,14 +365,26 @@ d3.dsv(",", "products_prepped.csv", function(d) {
     d3.select("#rank_sel").on("input", function() {
         rank_sel = +this.value;
         d3.select('#rank_val').text(rank_sel);
-        var data_results = processDatas(data, rank_sel)
+        var data_results = processDatas(data, rank_sel, sent_sel)
         var data_filter = data_results['data_filter']
         var data_tree = data_results['data_tree']
         d3.selectAll("g > *").remove()
 
         draw_circles(data_filter, data_tree)
-            });
+    });
+
+    d3.select("#sent_sel").on("input", function() {
+        console.log(sent_sel)
+        sent_sel = +this.value;
+        d3.select('#sent_val').text(sent_sel);
+        var data_results = processDatas(data, rank_sel, sent_sel)
+        var data_filter = data_results['data_filter']
+        var data_tree = data_results['data_tree']
+        d3.selectAll("g > *").remove()
+
+        draw_circles(data_filter, data_tree)
+    });
 
 }).catch(function(error) {
     console.log(error);
-}); 
+});
