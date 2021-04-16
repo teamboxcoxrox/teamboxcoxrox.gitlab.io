@@ -102,10 +102,24 @@ class DatasetBuilder:
             a['topic_rank'] = a.index
             a = a[['asin', 'topic_rank']]
             return a
+        print("Columns: ")
+        print(all_df.columns)
+        print("\n\n")
+        #'tech1', 'description', 'fit', 'title', 'also_buy', 'image', 'tech2',
+        #'brand', 'feature', 'rank', 'also_view', 'similar_item', 'date',
+        #'price', 'asin', 'amazon_category', 'topic', 'topic_name', 'category',
+        #'std_sentiment', 'mean_sentiment', 'min__sentiment', 'median_sentiment',
+        #'max_sentiment', 'overall_average_ranking', 'overall_count_ranking',
+        #'overall_stdev_ranking', 'ave_length_review_text', 'rank_ranking',
+        #'percentile_ranking', 'valid', 'valid_link'
 
         product_prepped = all_df[
             ['asin', 'title', 'description', 'category', 'topic_name', 'mean_sentiment', 'overall_count_ranking',
              'valid']]
+
+        print("Categories present: {}".format(list(set(all_df['category']))))
+
+        # , asin, title, description, category, topic_name, bubble_color, bubble_size, clean_link
         product_prepped.columns = ['asin', 'title', 'description', 'category', 'topic_name', 'bubble_color',
                                    'bubble_size', 'clean_link']  #
 
@@ -120,16 +134,19 @@ class DatasetBuilder:
         product_prepped = pd.concat(temp_dfs)
 
         product_prepped = product_prepped.drop_duplicates()
+        print("Categories after topic ranking: {}".format(list(set(all_df['category']))))
         # Remove bad products.
         print("Applying blocklist...")
         print("Product count before blocklist: {}".format(len(product_df)))
         product_prepped = product_prepped[~product_prepped['asin'].isin(blocklist['asin'])]
-        product_prepped.drop_duplicates('asin', keep="first", inplace=True)
+        #product_prepped.drop_duplicates('asin', keep="first", inplace=True)
         print("Product count after blocklist:  {}".format(len(product_df)))
-
+        print("Categories present are: {}", list(set(product_prepped['category'])))
         # Trim to top 100 products in LDA topic.
-        product_prepped = product_prepped[product_prepped['topic_rank'] <= 100]
         product_prepped.sort_values(['topic_rank'], inplace=True)
+
+        product_prepped = product_prepped[product_prepped['topic_rank'] <= 100]
+        #product_prepped = product_prepped.sample(4000)
 
         print("Product count after top 100 per topic:  {}".format(len(product_prepped)))
         print("Cleaning up product descriptions...")
