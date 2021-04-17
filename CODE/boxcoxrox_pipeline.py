@@ -22,16 +22,16 @@ class BoxCoxRoxPipeline:
 
     def run(self, download_data=True):
         print("Downloader...")
-        #if download_data:
-        #    self.dd.run(self.database_location)
+        if download_data:
+            self.dd.run(self.database_location)
         print("DFTI...")
-        #self.dfti.run(self.database_location)
+        self.dfti.run(self.database_location)
         print("Sentiment...")
-        #self.sentiment.run(self.database_location)
+        self.sentiment.run(self.database_location)
         print("Ranking...")
-        #self.ranking.run(self.database_location)
+        self.ranking.run(self.database_location)
         print("Validator...")
-        #self.validator.run(top_reviews=50)
+        self.validator.run(top_reviews=50)
         print("LDA...")
         self.lda.run(self.database_location, self.categories_file)
         print("Build Dataset...")

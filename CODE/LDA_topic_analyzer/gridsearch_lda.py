@@ -9,6 +9,9 @@ from sklearn.model_selection import GridSearchCV
 import numpy as np
 from matplotlib import pyplot as plt
 
+# Note:  This file is based on the approach by jonathan.soma@gmail.com described here:
+# https://investigate.ai/text-analysis/choosing-the-right-number-of-topics-for-a-scikit-learn-topic-model/
+#
 
 class GridSearchLDA:
 
@@ -42,7 +45,7 @@ class GridSearchLDA:
             ax.barh(top_features, weights, height=0.7, color='green')
             plt_title = "Topic {}".format(topic_idx+1)
             ax.invert_yaxis()
-            ax.tick_params(axis='both', which='major', labelsize=8)
+            ax.tick_params(axis='both', which='major', labelsize=10)
             for i in 'top right left'.split():
                 ax.spines[i].set_visible(False)
             #fig.suptitle(title, fontsize=40)
