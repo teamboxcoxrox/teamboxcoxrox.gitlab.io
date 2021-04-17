@@ -78,7 +78,7 @@ class GridSearchLDA:
 
         # Remove non-word characters, so numbers and ___ etc
         cats_df['all_text'] = cats_df['all_text'].str.replace("[^A-Za-z ]", " ")
-        dataset = cats_df.sample(1000)
+        dataset = cats_df.sample(2000)
 
         # English stemmer from pyStemmer
         stemmer = Stemmer.Stemmer('en')
