@@ -111,7 +111,7 @@ preconfigured to only validate the top 100 products by number of reviews.
 ---------------------   Final Data Assembly  ---------------------        
 Final data assembly is performed by merging the results of the above models into a single
 csv file that is used by the visualization.  Due to the dynamic nature of the Amazon, it is not uncommon for certain
-product ASINs that was previously used for an existing product to get assigned to a different
+product ASINs that were previously used for an existing product to be assigned to a different
 product.  We have discovered, through manual testing, that this can be the case.  When it happens, we have added the
 ASIN for that product to a blocklist.csv file.  In the final aggregation step, all blocked ASINs are removed from the
 dataset.  Additionally, the final aggregation step performs some optimization and cleaning of the text fields in the
