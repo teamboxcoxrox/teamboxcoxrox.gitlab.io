@@ -121,7 +121,9 @@ INTERACTIVE VISUALIZATION
 Visualization code for the project is stored in the /CODE/Visualization directory in this archive.  To run the code you
 can use the built-in python http server like so:
 
-python -m http.server
+Navigate to the docs folder:
+
+Execute: python -m http.server
 
 You can then view the visualization by going to:
 
