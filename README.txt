@@ -1,42 +1,24 @@
 A Multifaceted Product Recommendation System
+
 Team BoxCoxRox (Team 17):  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay
+
+Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
 ======================  DESCRIPTION  ======================
 
-The final deliverable of this project is an interactive web-based application that allows users to search for pet
-products that have been organized and prioritized based on extensive analytical techniques applied to customer product
-reviews.  This approach differs from Amazon search interface, which is largely driven by seller.  For more information
-about this project, please refer to the complete project report and supporting documents.
+The final deliverable of this project is an interactive web-based application that allows users to search 
+for pet products that have been organized and prioritized based on extensive analytical techniques applied to customer 
+product reviews. This approach differs from Amazon search interface, which is largely driven by seller. For more information 
+about this project, please refer to the complete project report and supporting documents in the DOC folder.
 
-This file contains instructions for running the various components of the Team BoxCoxRox project for Georgia Tech
-course CSE 6242 for Spring, 2021.
+The CODE folder contains the codebase for two major components:
+1. Data Analytics Pipeline - scripts that downloads, pre-processes and restructures data to be stored in a Sqlite3 database called pets.db. The dataset then undergo the analytical modelling process (see details in the execution section) to produce the final data required for the interactive visualization component.
+2. interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
 
+This file contains instructions for running the various components of the Team BoxCoxRox project for Georgia Tech course 
+CSE 6242 for Spring, 2021.
 
-======================  DEMO  ======================
-
-This project has been deployed to gitlab.io.  You can access the project visualization by going
-to the following link:  (In other words, you don't need to run the code locally...  unless you really really want to.)
-
-https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
-
-The following instructions are intended for anyone wishing to attempt to recreate out work.  Please note several things:
-
-1.  This project involves several large files that are downloaded from the internet.
-2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
-    some cases days, to complete.
-3.  This project requires Python 3.7, and numerous libraries.
-
-In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
-please reach out to the BOXCOXROX contact person for installation and implementation questions:
-
-Miles Porter
-(mporter45 at gatech dot com)
-
-Thanks for your interest in our project!
-
---- Team #017 BoxCoxRox
-
-======================  INSTALLATION  ======================
+======================  INSTALLATION - How to install and setup your code ======================
 
 Recreating the work described in the project report consists of the following steps:
 
@@ -51,25 +33,30 @@ project repository.  The following command can be used in order to install the r
 
 pip install -r /docs/requirements.txt
 
+Any further missing packages can be installed following instructions found at https://pip.pypa.io/en/stable/reference/pip_install/
+
 Note separate javascript libraries are required for the visualization part of this application.  Those libraries are
 contained in the visualization folder in the project repository.
 
-For information on running the data pipeline, please refer to the README.txt file in the /docs directory.
+======================  EXECUTION - How to run a demo on your code ======================
 
-This project includes code that downloads data from the source data repository, pre-processes and restructures that 
-data and then creates pets.db, which is a Sqlite3 database. The resulting database database contains 2 tables that 
-hold product information for 205,999 amazon products, and 6,542,483 product reviews.  
+DATA ANALYTICS PIPELINE
 
-The overall size of the pets.db database is:  4.7G
+This section will outline the steps performed by the analytics pipeline process. Please note that the boxcoxrox_pipeline.py file located in the CODE folder will generated the products_prepped.csv that will be used by the visualization component. The pipeline script boxcoxrox_pipeline.py will include the execution of the following processes detailed below:
+1. Data download
+2. DFTI: Direct Frequency Topic Identification
+3. Sentiment Analysis
+4. Product Ranking Analysis
+5. Latent Dirichlet Allocation (LDA) Topic Analysis
+6. Link Validation
+7. Final Data Assembly
 
-======================  EXECUTION ======================
+To run the code you, enter the following command into your command prompt in the directory where boxcoxrox_pipeline.py is located
 
-Data Analytics Pipeline Components:
+python boxcoxrox_pipeline.py
 
-The rest of this document will outline the steps performed by the analytics pipeline process.
-
-
-- Data download:  The data pipeline downloads data for this project from the following url:
+--------------------- Data download  ---------------------
+The data pipeline downloads data for this project from the following url:
 
 http://deepyeti.ucsd.edu/jianmo/amazon/categoryFiles/Pet_Supplies.json.gz
 http://deepyeti.ucsd.edu/jianmo/amazon/metaFiles/meta_Pet_Supplies.json.gz
@@ -84,49 +71,53 @@ Please not the if an existing .gz file is present in the root folder of the proj
 download process.  If you wish to re-start the download due to a failure or some other reason, you must first delete the
 .gz files present in the root folder before running the pipeline.
 
-- Analytic models
+---------------------  ANALYTIC MODELS  ---------------------
 Once the data has been downloaded, multiple main analytic models are used to structure the data for visualization.  In
 each case, the input to the analytic models is the pets.db database, and the output of the models is a CSV file.  The
 csv files are then combined in the last step of the pipeline process. The analytic models that are run on the data are
 described below.  These analytic models must be performed sequentially in the order described below.
 
-- DFTI: Direct Frequency Topic Identification.  DFTI is a new approach that the team developed to provide an initial
+---------------------  DFTI: Direct Frequency Topic Identification  ---------------------      
+DFTI is a new approach that the team developed to provide an initial 
 top level categorization of the products based on product reviews.  DFTI begins with a list of specific categories.  For
 this project, those categories are [dog, cat, bird, fish, rodents and rabbits, amphibians and reptiles, farm animals,
 other].  Each of these categories has a list of key words.  For example, the category "cat" has the key words ['cat',
 'cats', 'kitten', 'kittens', 'feline', 'felines'].  DFTI works by counting the number of occurrences of the key words
 for each category.  The category that has the most "hits" wins, and the product is set to that top level.
 
-- Sentiment Analysis:  This project uses the Vader sentiment analysis tool, which evaluates text and returns a
-sentiment score from -1 to 1.  For more information on Vader, please refer to the complete project report.
+---------------------  Sentiment Analysis   ---------------------      
+This project uses the Vader sentiment analysis tool, which evaluates text and returns a
+sentiment score from -1 to 1.  For more information on Vader, please refer to the project report in the DOC folder.
 
-- Product Ranking Analysis:  The goal of product ranking analysis is to rank the products based on the number of stars
+---------------------  Product Ranking Analysis     ---------------------      
+The goal of product ranking analysis is to rank the products based on the number of stars
 customers reported as part of their reviews.  The raking is done by loading all of the reviews, and then aggregating
 them by product (asin).  Next, the code calculates the mean, median and standard deviation of the stars.  The code also
 calculates the average length of review text.
 
-- Link Validation:  The goal of the link validation is to provide a pre-check on if the product still has a valid
+---------------------  Latent Dirichlet Allocation (LDA) Topic Analysis     ---------------------      
+The LDA process requires the complete pets database, and the categories.csv file described in the DFTI section above.  
+The program retrieves all reviews in a given category, and then performs LDA topic extraction on those documents.  
+Gridsearch CV is used to determine the optimal number of topic clusters. Since LDA is an unsupervised algorithm, 
+the clusters identified are not known beforehand.  As a result, png files and a separate LDA visualization 
+is generated as part of the algorithm as well. The artifacts are then included in the final visualization for the project.
+
+---------------------  Link Validation  ---------------------      
+The goal of the link validation is to provide a pre-check on if the product still has a valid
 presence on Amazon.com.  This validation is done using Selenium.  Link validation is the most "expensive" part of the
 overall data pipeline as it takes approximately 2 seconds per product.  As a result, the code in the pipeline has been
 preconfigured to only validate the top 100 products by number of reviews.
 
-- Latent Dirichlet Allocation (LDA) Topic Analysis:  The LDA process requires the complete pets database, and the
-categories.csv file described in the DFTI section above.  The program retrieves all reviews in a given category, and
-then performs LDA topic extraction on those documents.  Seven topic clusters are defined for each category.  Since LDA
-is an unsupervised algorithm, the clusters identified are not known beforehand.  As a result, png files and a separate
-LDA visualization is generated as part of the algorithm as well.  The artifacts are then included in the final
-visualization for the project.
-
-Final Data Aggregation:  Final data aggregation is performed by merging the results of the above models into a single
+---------------------   Final Data Assembly  ---------------------        
+Final data assembly is performed by merging the results of the above models into a single
 csv file that is used by the visualization.  Due to the dynamic nature of the Amazon, it is not uncommon for certain
-product ASINs to become hijacked.  In this situation an ASIN for an existing product gets assigned to a different
+product ASINs that was previously used for an existing product gets assigned to a different
 product.  We have discovered, through manual testing, that this can be the case.  When it happens, we have added the
 ASIN for that product to a blocklist.csv file.  In the final aggregation step, all blocked ASINs are removed from the
 dataset.  Additionally, the final aggregation step performs some optimization and cleaning of the text fields in the
 database to prepare the data for the visualization components.
 
-Visualization:
-
+INTERACTIVE VISUALIZATION
 Visualization code for the project is stored in the /CODE/Visualization directory in this archive.  To run the code you
 can use the built-in python http server like so:
 
@@ -134,7 +125,31 @@ python -m http.server
 
 You can then view the visualization by going to:
 
-http://localhost:8000/docs/index.html
+http://localhost:8000/docs/index.html or http://0.0.0.0:8000/
+
+======================  DEMO  ======================
+
+This project has been deployed to gitlab.io which can be accessed at https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
+
+Demo video to show how to deploy the interactive visualization locally - https://www.youtube.com/watch?v=Z7eX51reS7I
+
+The following instructions are intended for anyone wishing to attempt to recreate out work.  Please note several things:
+
+1.  This project involves several large files that are downloaded from the internet.
+2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
+    some cases days, to complete.
+3.  This project requires Python 3.7, and numerous libraries.
+
+
+In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
+please reach out to the BOXCOXROX contact person for installation and implementation questions:
+
+Miles Porter
+(mporter45 at gatech dot com)
+
+Thanks for your interest in our project!
+
+--- Team #017 BoxCoxRox
 
 ====================== LICENSE ======================
 
