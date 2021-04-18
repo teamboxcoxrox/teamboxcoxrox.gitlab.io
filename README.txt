@@ -105,7 +105,7 @@ is generated as part of the algorithm as well. The artifacts are then included i
 ---------------------  Link Validation  ---------------------      
 The goal of the link validation is to provide a pre-check on if the product still has a valid
 presence on Amazon.com.  This validation is done using Selenium.  Link validation is the most "expensive" part of the
-overall data pipeline as it takes approximately 2 seconds per product.  As a result, the code in the pipeline has been
+overall data pipeline as it takes approximately 2-4 seconds per product.  As a result, the code in the pipeline has been
 preconfigured to only validate the top 100 products by number of reviews.
 
 ---------------------   Final Data Assembly  ---------------------        
