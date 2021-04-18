@@ -8,5 +8,6 @@ df <-  merge(x = df_rank, y = df_sent, by = "asin", all.x = TRUE)
 df_filt <-  df[df$overall_count >= 10,]
 
 mdl = lm(mean_rank~mean_sentiment, data=df_filt)
-plot(df_filt$mean_sentiment, df_filt$mean_rank)
+plot(df_filt$mean_sentiment, df_filt$mean_rank, main="Sentiment vs Rating", xlab="Product Average Sentiment", ylab='Product Average Rating')
+abline(mdl,lty=2, col='Red')
 summary(mdl)
