@@ -140,7 +140,7 @@ The following instructions are intended for anyone wishing to attempt to recreat
 1.  This project involves several large files that are downloaded from the internet.
 2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
     some cases days, to complete.
-3.  This project requires Python 3.7, and numerous libraries.
+3.  This project requires Python 3.7 and numerous libraries.
 
 
 In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
