@@ -57,7 +57,7 @@ script boxcoxrox_pipeline.py will include the execution of the following process
 6. Link Validation
 7. Final Data Assembly
 
-To run the code you, enter the following command into your command prompt in the directory where boxcoxrox_pipeline.py is located
+To run the code, enter the following command into your command prompt in the directory where boxcoxrox_pipeline.py is located
 
 python boxcoxrox_pipeline.py
 
