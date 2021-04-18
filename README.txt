@@ -8,10 +8,14 @@ Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
 The final deliverable of this project is an interactive web-based application that allows users to search 
 for pet products that have been organized and prioritized based on extensive analytical techniques applied to customer 
-product reviews. This approach differs from Amazon search interface, which is largely driven by seller centric. Our product aims to empower the user to find products navigating around the heavy hand of advertising. For more information about this project, please refer to the complete project report and supporting documents in the DOC folder.
+product reviews. This approach differs from Amazon search interface, which is largely driven by seller centric. Our 
+product aims to empower the user to find products navigating around the heavy hand of advertising. For more information 
+about this project, please refer to the complete project report and supporting documents in the DOC folder.
 
 The CODE folder contains the codebase for two major components:
-1. Data Analytics Pipeline - scripts that downloads, pre-processes and restructures data to be stored in a Sqlite3 database called pets.db. The dataset then undergo the analytical modelling process (see details in the execution section) to produce the final data required for the interactive visualization component.
+1. Data Analytics Pipeline - scripts that downloads, pre-processes and restructures data to be stored in a Sqlite3 database
+called pets.db. The dataset then undergo the analytical modelling process (see details in the execution section) to produce 
+the final data required for the interactive visualization component.
 2. interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
 
 This file contains instructions for running the various components of the Team BoxCoxRox project for Georgia Tech course 
@@ -41,7 +45,10 @@ contained in the visualization folder in the project repository.
 
 DATA ANALYTICS PIPELINE
 
-This section will outline the steps performed by the analytics pipeline process. Please note that the boxcoxrox_pipeline.py file located in the CODE folder will generated the products_prepped.csv that will be used by the visualization component. The pipeline script boxcoxrox_pipeline.py will include the execution of the following processes detailed below:
+This section will outline the steps performed by the analytics pipeline process. Please note that the boxcoxrox_pipeline.py file 
+located in the CODE folder will generated the products_prepped.csv that will be used by the visualization component. The pipeline 
+script boxcoxrox_pipeline.py will include the execution of the following processes detailed below:
+
 1. Data download
 2. DFTI: Direct Frequency Topic Identification
 3. Sentiment Analysis
