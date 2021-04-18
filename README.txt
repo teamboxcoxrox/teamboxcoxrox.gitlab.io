@@ -72,7 +72,7 @@ download process.  If you wish to re-start the download due to a failure or some
 .gz files present in the root folder before running the pipeline.
 
 ---------------------  ANALYTIC MODELS  ---------------------
-Once the data has been downloaded, multiple main analytic models are used to structure the data for visualization.  In
+Once the data has been downloaded, multiple analytic models are used to structure the data for visualization.  In
 each case, the input to the analytic models is the pets.db database, and the output of the models is a CSV file.  The
 csv files are then combined in the last step of the pipeline process. The analytic models that are run on the data are
 described below.  These analytic models must be performed sequentially in the order described below.
