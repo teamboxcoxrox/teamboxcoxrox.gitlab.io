@@ -1,11 +1,13 @@
 # A Multifaceted Product Recommendation System
 Team BoxCoxRox (Team 17):  N. Abramson, M. Kunnen, K. Matisko, K. McCanless, M. Porter and S. Tay
+
 Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
+
 ## DESCRIPTION
 
-This repository contains the visualization components for the team project for Team #017 Boxcoxrox for 
-Georgia Tech CSE 6242 for Spring 2021.  The code in this repository provides a visualization for the 
-output of the data processing pipeline found in the boxcoxrox repo.
+The final deliverable of this project is an interactive web-based application that allows users to search for pet products that have been organized and prioritized based on extensive analytical techniques applied to customer product reviews.  This approach differs from Amazon search interface, which is largely driven by seller. For more information about this project, please refer to the complete project report and supporting documents in the DOC folder.
+
+This file contains instructions for running the various components of the Team BoxCoxRox project for Georgia Tech course CSE 6242 for Spring, 2021.
 
 ## INSTALLATION - How to install and setup your code
 
