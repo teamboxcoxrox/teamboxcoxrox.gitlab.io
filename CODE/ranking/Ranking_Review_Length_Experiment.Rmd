@@ -22,7 +22,7 @@ The following code will load the necessary libraries and the data:
 library(dplyr)
 library(tidyverse)
 
-df = read.csv('ranking_output.csv')
+df = read.csv('../ranking.csv')
 summary(df)
 ```
 # Method
@@ -41,6 +41,7 @@ Again, the goal of this experiment is to see if there is a strong correlation be
 
 
 ```{r fig.width=4, fig.height=4}
+set.seed(1000)
 df_sample <- sample_n(df, 1000)
 plot(df_sample$average_length_of_review_text, df_sample$overall_average, xlab="Ave. Review Length", pch=19, cex=.3, 
      ylab="Average Rating (Stars)", main="Ratings vs Review Length")
