@@ -23,6 +23,19 @@ CSE 6242 for Spring, 2021.
 
 ======================  INSTALLATION - How to install and setup your code ======================
 
+The following instructions are intended for anyone wishing to attempt to recreate out work.  Before running the entire 
+pipeline, please note the following:
+
+
+1.  This project involves several large files that are downloaded from the internet.
+2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
+    some cases days, to complete.
+3.  This project requires Python 3.7 and numerous libraries.
+
+In general, this is a large and complex visualization.  If you wish to execute our code, but don't want to run our entire
+data pipeline, please skip ahead in this document to the DEMO section for information on how to run this code locally 
+with a pre-build version of the final compiled dataset.
+
 Recreating the work described in the project report consists of the following steps:
 
 1.  Run the data pipeline to download and process source data for amazon.com pet product reviews.
@@ -139,21 +152,7 @@ http://localhost:8000/docs/index.html or http://0.0.0.0:8000/
 
 This project has been deployed to gitlab.io which can be accessed at https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
-Demo video to show how to deploy the interactive visualization locally - https://www.youtube.com/watch?v=Z7eX51reS7I
-
-The following instructions are intended for anyone wishing to attempt to recreate out work.  Please note several things:
-
-1.  This project involves several large files that are downloaded from the internet.
-2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
-    some cases days, to complete.
-3.  This project requires Python 3.7 and numerous libraries.
-
-
-In general, this is a large and complex visualization.  If you experience difficulty in getting this code to work,
-please reach out to the BOXCOXROX contact person for installation and implementation questions:
-
-Miles Porter
-(mporter45 at gatech dot com)
+Demo video to show how to deploy the prebuilt interactive visualization locally - https://www.youtube.com/watch?v=Z7eX51reS7I
 
 Thanks for your interest in our project!
 
