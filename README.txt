@@ -14,7 +14,7 @@ about this project, please refer to the complete project reports and supporting 
 
 The CODE folder contains the codebase for two major components:
 1. Data Analytics Pipeline - scripts that download, pre-process and restructure data to be stored in a Sqlite3 database
-called pets.db. The dataset then undergoes the analytical modelling process (see details in the execution section) to produce 
+called pets.db. The dataset then undergoes the analytical modeling process (see details in the execution section) to produce 
 the final data required for the interactive visualization component.
 2. Interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
 
@@ -109,7 +109,7 @@ the clusters identified are not known beforehand.  As a result, png files and a 
 is generated as part of the algorithm as well. The artifacts are then included in the final visualization for the project.
 
 ---------------------  Link Validation  ---------------------      
-The goal of the link validation is to provide a pre-check the the product still has a valid presence on Amazon.com.  This
+The goal of the link validation is to provide a pre-check if the product still has a valid presence on Amazon.com.  This
 validation is done using Selenium.  Link validation is the most "expensive" part of the
 overall data pipeline as it takes approximately 2-4 seconds per product.  As a result, the code in the pipeline has been
 preconfigured to only validate the top 100 products by number of reviews.
