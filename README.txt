@@ -14,7 +14,7 @@ about this project, please refer to the complete project reports and supporting 
 
 The CODE folder contains the codebase for two major components:
 1. Data Analytics Pipeline - scripts that download, pre-process and restructure data to be stored in a Sqlite3 database
-called pets.db. The dataset then undergoes the analytical modeling process (see details in the execution section) to produce 
+called pets.db. The dataset then undergoes the analytical modelling process (see details in the execution section) to produce 
 the final data required for the interactive visualization component.
 2. Interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
 
