@@ -30,7 +30,7 @@ pipeline, please note the following:
 1.  This project involves several large files that are downloaded from the internet.
 2.  This project involves multiple data analytics models that are part of a larger pipeline and can take hours, and in
     some cases days, to complete.
-3.  This project requires Python 3.7 and numerous libraries.
+3.  This project requires Python 3.7.6 and numerous libraries.
 
 In general, this is a large and complex visualization.  If you wish to execute our code, but don't want to run our entire
 data pipeline, please skip ahead in this document to the DEMO section for information on how to run this code locally 
