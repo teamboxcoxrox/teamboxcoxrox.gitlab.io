@@ -6,17 +6,17 @@ Link: https://teamboxcoxrox.github.io/teamboxcoxrox.gitlab.io/
 
 ======================  DESCRIPTION  ======================
 
-The final deliverable of this project is an interactive web-based application that allows users to search 
+The final deliverable of this project is an interactive web-based application which allows users to search 
 for pet products that have been organized and prioritized based on extensive analytical techniques applied to customer 
-product reviews. This approach differs from Amazon search interface, which is largely driven by seller centric. Our 
-product aims to empower the user to find products navigating around the heavy hand of advertising. For more information 
-about this project, please refer to the complete project report and supporting documents in the DOC folder.
+product reviews. This approach differs from Amazon's search interface which is largely seller centric. Our 
+project aims to empower the user to find products navigating around the heavy hand of advertising. For more information 
+about this project, please refer to the complete project reports and supporting documents in the DOC folder.
 
 The CODE folder contains the codebase for two major components:
-1. Data Analytics Pipeline - scripts that downloads, pre-processes and restructures data to be stored in a Sqlite3 database
-called pets.db. The dataset then undergo the analytical modelling process (see details in the execution section) to produce 
+1. Data Analytics Pipeline - scripts that download, pre-process and restructure data to be stored in a Sqlite3 database
+called pets.db. The dataset then undergoes the analytical modelling process (see details in the execution section) to produce 
 the final data required for the interactive visualization component.
-2. interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
+2. Interactive visualization - A D3.js-driven interactive bubble chart. Code is located in the visualization folder.
 
 This file contains instructions for running the various components of the Team BoxCoxRox project for Georgia Tech course 
 CSE 6242 for Spring, 2021.
@@ -73,14 +73,14 @@ document, but rather text files with one json object per line.  The data pipelin
 result of the download process is a Sqlite3 database that is used as input for different elements of the overall
 pipeline.
 
-Please not the if an existing .gz file is present in the root folder of the project, the downloader will bypass the
-download process.  If you wish to re-start the download due to a failure or some other reason, you must first delete the
+Please note the if an existing .gz file is present in the root folder of the project, the downloader will bypass the
+download process.  If you wish to re-start the download due to a failure or some other reason, you must first delete all
 .gz files present in the root folder before running the pipeline.
 
 ---------------------  ANALYTIC MODELS  ---------------------
 Once the data has been downloaded, multiple analytic models are used to structure the data for visualization.  In
 each case, the input to the analytic models is the pets.db database, and the output of the models is a CSV file.  The
-csv files are then combined in the last step of the pipeline process. The analytic models that are run on the data are
+csv files are then combined in the last step of the pipeline process. The analytic models that are executed on the data are
 described below.  These analytic models must be performed sequentially in the order described below.
 
 ---------------------  DFTI: Direct Frequency Topic Identification  ---------------------      
@@ -109,8 +109,8 @@ the clusters identified are not known beforehand.  As a result, png files and a 
 is generated as part of the algorithm as well. The artifacts are then included in the final visualization for the project.
 
 ---------------------  Link Validation  ---------------------      
-The goal of the link validation is to provide a pre-check on if the product still has a valid
-presence on Amazon.com.  This validation is done using Selenium.  Link validation is the most "expensive" part of the
+The goal of the link validation is to provide a pre-check the the product still has a valid presence on Amazon.com.  This
+validation is done using Selenium.  Link validation is the most "expensive" part of the
 overall data pipeline as it takes approximately 2-4 seconds per product.  As a result, the code in the pipeline has been
 preconfigured to only validate the top 100 products by number of reviews.
 
